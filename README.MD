@@ -22,7 +22,6 @@ This directory contains the phased build plan for the Employee Suggestion Box ap
 | 13 | [Testing](13-testing.md) | PHPUnit, Vitest, component tests | 2 days |
 | 14 | [Deployment & DevOps](14-deployment-and-devops.md) | Docker, CI/CD, production setup | 1–2 days |
 
-**Total estimated effort**: ~16–22 days
 
 ## How to Use
 
