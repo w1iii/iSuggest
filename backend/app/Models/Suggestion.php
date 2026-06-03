@@ -1,6 +1,4 @@
 <?php
-// Ramos June 2, 2026 changed
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Attributes\Fillable;
@@ -18,4 +16,3 @@ class Suggestion extends Model
         return $this->belongsTo(User::class);
     }
 }
-// Ramos June 2, 2026 changed

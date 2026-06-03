@@ -1,6 +1,4 @@
 <?php
-// Ramos June 2, 2026 changed
-
 namespace App\Models;
 
 use Database\Factories\UserFactory;
@@ -12,7 +10,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-#[Fillable(['name', 'email', 'password'])]
+#[Fillable(['name', 'email', 'password', 'role'])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {
@@ -32,4 +30,3 @@ class User extends Authenticatable
         return $this->hasMany(Suggestion::class);
     }
 }
-// Ramos June 2, 2026 changed

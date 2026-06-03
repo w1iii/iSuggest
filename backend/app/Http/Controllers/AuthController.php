@@ -1,6 +1,4 @@
 <?php
-// Ramos June 2, 2026 changed
-
 namespace App\Http\Controllers;
 
 use App\Models\User;
@@ -65,4 +63,3 @@ class AuthController extends Controller
         return response()->json(['message' => 'Logged out successfully']);
     }
 }
-// Ramos June 2, 2026 changed

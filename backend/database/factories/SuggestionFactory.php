@@ -1,6 +1,4 @@
 <?php
-// Ramos June 2, 2026 changed
-
 namespace Database\Factories;
 
 use App\Models\Suggestion;
@@ -23,4 +21,3 @@ class SuggestionFactory extends Factory
         ];
     }
 }
-// Ramos June 2, 2026 changed

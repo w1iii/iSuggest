@@ -1,6 +1,4 @@
 <?php
-// Ramos June 2, 2026 changed
-
 namespace App\Http\Middleware;
 
 use Closure;
@@ -18,4 +16,3 @@ class CheckRole
         return response()->json(['message' => 'Unauthorized access'], 403);
     }
 }
-// Ramos June 2, 2026 changed
