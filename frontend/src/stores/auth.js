@@ -8,7 +8,7 @@ export const useAuthStore = defineStore('auth', () => {
   const token = ref(localStorage.getItem('access_token') || null);
 
   const isAuthenticated = computed(() => !!token.value);
-  const isAdmin = computed(() => user.value?.role === 'Administrator');
+  const isAdmin = computed(() => user.value?.role === 'Administrator' || user.value?.role === 'Super Administrator');
 
   async function login(credentials) {
     const response = await axios.post('/api/v1/login', credentials);

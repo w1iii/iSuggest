@@ -1,51 +1,91 @@
 <script setup>
+import logo from '@/assets/logo.png'
 import { ref, onMounted, onUnmounted } from 'vue'
+import { useRouter } from 'vue-router'
+import { useAuthStore } from '@/stores/auth'
 
+const router = useRouter()
+const authStore = useAuthStore()
+
+const cursor = ref(null)
 const role = ref('employee')
 const email = ref('')
 const password = ref('')
 const remember = ref(false)
+const error = ref('')
+const loading = ref(false)
 
 function toggleRole(r) {
   role.value = r
 }
 
-function handleSubmit() {
-  // Static — no backend yet
+async function handleSubmit() {
+  error.value = ''
+  loading.value = true
+  try {
+    await authStore.login({ email: email.value, password: password.value })
+    if (authStore.isAdmin) {
+      router.push('/dashboard')
+    } else {
+      router.push('/dashboard')
+    }
+  } catch (err) {
+    error.value = err.response?.data?.message || 'Login failed. Please check your credentials.'
+  } finally {
+    loading.value = false
+  }
 }
 
-let onMouseMove
-
 onMounted(() => {
-  onMouseMove = (e) => {
-    const scribbles = document.querySelectorAll('.parallax-scribble')
-    const x = (window.innerWidth - e.pageX * 2) / 100
-    const y = (window.innerHeight - e.pageY * 2) / 100
-    scribbles.forEach(s => {
-      s.style.transform = `translateX(${x}px) translateY(${y}px)`
-    })
+  const cursorEl = cursor.value
+  if (!cursorEl) return
+
+  const onMouseMove = (e) => {
+    cursorEl.style.left = e.clientX + 'px'
+    cursorEl.style.top = e.clientY + 'px'
   }
   document.addEventListener('mousemove', onMouseMove)
-})
 
-onUnmounted(() => {
-  document.removeEventListener('mousemove', onMouseMove)
+  const interactiveEls = document.querySelectorAll('a, button')
+  const onEnter = () => {
+    cursorEl.style.transform = 'scale(2.5)'
+    cursorEl.style.backgroundColor = 'rgba(6, 22, 15, 0.1)'
+  }
+  const onLeave = () => {
+    cursorEl.style.transform = 'scale(1)'
+    cursorEl.style.backgroundColor = 'transparent'
+  }
+  interactiveEls.forEach(el => {
+    el.addEventListener('mouseenter', onEnter)
+    el.addEventListener('mouseleave', onLeave)
+  })
+
+  onUnmounted(() => {
+    document.removeEventListener('mousemove', onMouseMove)
+    interactiveEls.forEach(el => {
+      el.removeEventListener('mouseenter', onEnter)
+      el.removeEventListener('mouseleave', onLeave)
+    })
+  })
 })
 </script>
 
 <template>
-  <div class="bg-background text-on-background font-body-md min-h-screen flex flex-col overflow-x-hidden">
+  <div class="bg-background text-on-background font-body-md selection:bg-tertiary-fixed min-h-screen flex flex-col overflow-x-hidden">
+    <div ref="cursor" class="custom-cursor hidden md:block"></div>
     <header class="w-full top-0 sticky z-50 bg-background border-b-2 border-primary">
-      <div class="flex justify-between items-center h-20 px-gutter max-w-page mx-auto">
-        <a class="font-headline-md text-headline-md font-bold text-primary flex items-center gap-2" href="#">
-          <span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">hub</span>
-          InnovationHub
-        </a>
-        <nav class="hidden md:flex gap-8">
-          <a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">About Us</a>
-          <a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">Support</a>
-        </nav>
-      </div>
+      <nav class="flex justify-between items-center h-20 px-gutter max-w-page mx-auto">
+        <router-link to="/" class="flex items-center gap-3">
+          <img :src="logo" alt="iSuggest Logo" class="w-10 h-10 object-contain" />
+          <span class="font-headline-md text-headline-md font-bold text-primary">iSuggest</span>
+        </router-link>
+        <div class="hidden md:flex space-x-8 items-center">
+          <a class="text-on-surface-variant font-body-md text-body-md cursor-pointer hover:text-primary transition-colors duration-200 active:opacity-80" href="/#features">Features</a>
+          <a class="text-on-surface-variant font-body-md text-body-md cursor-pointer hover:text-primary transition-colors duration-200 active:opacity-80" href="/#how-it-works">How It Works</a>
+          <a class="text-on-surface-variant font-body-md text-body-md cursor-pointer hover:text-primary transition-colors duration-200 active:opacity-80" href="/#about">About Us</a>
+        </div>
+        <router-link to="/login" class="bg-primary text-background px-8 py-3 rounded-full font-label-md text-label-md hover:bg-primary-container transition-all active:scale-95">Sign In</router-link>
+      </nav>
     </header>
 
     <main class="flex-grow flex items-center justify-center px-gutter py-section-padding-mobile md:py-section-padding-desktop">
@@ -85,6 +125,9 @@ onUnmounted(() => {
             </button>
           </div>
 
+          <div v-if="error" class="bg-error-container text-on-error-container px-4 py-3 rounded-full text-label-md font-label-md mb-4 text-center">
+            {{ error }}
+          </div>
           <form class="space-y-6" @submit.prevent="handleSubmit">
             <div class="space-y-2">
               <label class="font-label-md text-label-md text-primary ml-2" for="email">Email Address</label>
@@ -125,11 +168,18 @@ onUnmounted(() => {
             </div>
 
             <button
-              class="w-full h-14 bg-primary-container text-background font-label-md text-label-md rounded-full hover:bg-primary transition-all duration-300 active:scale-[0.98] flex items-center justify-center gap-2 group cursor-pointer"
+              class="w-full h-14 bg-primary-container text-background font-label-md text-label-md rounded-full hover:bg-primary transition-all duration-300 active:scale-[0.98] flex items-center justify-center gap-2 group cursor-pointer disabled:opacity-50"
               type="submit"
+              :disabled="loading"
             >
-              Sign In to Dashboard
-              <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+              <template v-if="loading">
+                <span class="inline-block w-5 h-5 border-2 border-background border-t-transparent rounded-full animate-spin"></span>
+                Signing In...
+              </template>
+              <template v-else>
+                Sign In to Dashboard
+                <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+              </template>
             </button>
           </form>
 

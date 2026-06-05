@@ -59,7 +59,7 @@ onMounted(() => {
 
     <header class="w-full top-0 sticky z-50 bg-background border-b-2 border-primary">
       <nav class="flex justify-between items-center h-20 px-gutter max-w-page mx-auto">
-        <div class="flex items-center gap-3">
+        <router-link to="/" class="flex items-center gap-3">
   <img
     :src="logo"
     alt="iSuggest Logo"
@@ -68,15 +68,15 @@ onMounted(() => {
       <span class="font-headline-md text-headline-md font-bold text-primary">
        iSuggest
       </span>
-      </div>
+      </router-link>
         <div class="hidden md:flex space-x-8 items-center">
-          <a class="text-primary font-bold border-b-2 border-primary pb-1 font-body-md text-body-md cursor-pointer active:opacity-80" href="#">Employee Portal</a>
-          <a class="text-on-surface-variant font-body-md text-body-md cursor-pointer hover:text-primary transition-colors duration-200 active:opacity-80" href="#">Admin Portal</a>
-          <a class="text-on-surface-variant font-body-md text-body-md cursor-pointer hover:text-primary transition-colors duration-200 active:opacity-80" href="#">About Us</a>
+          <a class="text-on-surface-variant font-body-md text-body-md cursor-pointer hover:text-primary transition-colors duration-200 active:opacity-80" href="#features">Features</a>
+          <a class="text-on-surface-variant font-body-md text-body-md cursor-pointer hover:text-primary transition-colors duration-200 active:opacity-80" href="#how-it-works">How It Works</a>
+          <a class="text-on-surface-variant font-body-md text-body-md cursor-pointer hover:text-primary transition-colors duration-200 active:opacity-80" href="#about">About Us</a>
         </div>
-        <button class="bg-primary text-background px-8 py-3 rounded-full font-label-md text-label-md hover:bg-primary-container transition-all active:scale-95">
+        <router-link to="/login" class="bg-primary text-background px-8 py-3 rounded-full font-label-md text-label-md hover:bg-primary-container transition-all active:scale-95">
           Sign In
-        </button>
+        </router-link>
       </nav>
     </header>
 
@@ -84,10 +84,6 @@ onMounted(() => {
       <section class="relative py-section-padding-mobile md:py-section-padding-desktop overflow-hidden">
         <div class="max-w-page mx-auto px-gutter grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           <div class="lg:col-span-7 z-10">
-            <div class="mb-6 inline-flex items-center gap-2 bg-secondary-fixed text-on-secondary-fixed px-4 py-1 rounded-full text-label-md font-label-md">
-              <span class="material-symbols-outlined text-[18px]">auto_awesome</span>
-              
-            </div>
             <h1 class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg text-primary mb-8">
               The future is built on <span class="scribble-highlight">iSuggest</span>.
             </h1>
@@ -118,7 +114,7 @@ onMounted(() => {
         </div>
       </section>
 
-      <section class="bg-surface-container-lowest py-section-padding-mobile md:py-section-padding-desktop">
+      <section id="features" class="bg-surface-container-lowest py-section-padding-mobile md:py-section-padding-desktop">
         <div class="max-w-page mx-auto px-gutter">
           <div class="text-center mb-16">
             <h2 class="font-headline-lg text-headline-lg text-primary mb-4">Choose Your Path</h2>
@@ -160,7 +156,7 @@ onMounted(() => {
         </div>
       </section>
 
-      <section class="py-section-padding-mobile md:py-section-padding-desktop">
+      <section id="how-it-works" class="py-section-padding-mobile md:py-section-padding-desktop">
         <div class="max-w-page mx-auto px-gutter">
           <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
             <div class="md:col-span-8 bg-surface-container border-2 border-primary rounded p-8 relative overflow-hidden">
@@ -205,7 +201,7 @@ onMounted(() => {
       </section>
     </main>
 
-    <footer class="w-full mt-section-padding-desktop bg-surface-container border-t-2 border-primary">
+    <footer id="about" class="w-full mt-section-padding-desktop bg-surface-container border-t-2 border-primary">
       <div class="flex flex-col md:flex-row justify-between items-center py-section-padding-mobile px-gutter max-w-page mx-auto gap-8">
         <div class="flex flex-col items-center md:items-start gap-4">
           <div class="font-headline-md text-headline-md font-bold text-primary">iSuggest</div>
