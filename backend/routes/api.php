@@ -1,6 +1,8 @@
 <?php
+
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Controllers\SubmitController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -13,10 +15,11 @@ Route::post('/v1/login', [AuthController::class, 'login'])->middleware('throttle
 Route::middleware('auth:sanctum')->prefix('v1')->group(function () {
     //Auth Controllers
     Route::post('/logout', [AuthController::class, 'logout']);
-    Route::get('/user', [ProfileController::class, 'show']);
+    Route::get('/user', [\App\Http\Controllers\ProfileController::class, 'show']);    
+    Route::patch('/user', [\App\Http\Controllers\ProfileController::class, 'update']);
 
-    Route::middleware('role:Administrator')->group(function () {
-        // Admin routes
+    Route::middleware('role:Administrator')->prefix('admin')->group(function () {
+        Route::post('/employees', [EmployeeController::class, 'store']);
     });
 
     Route::middleware('role:Employee')->group(function () {
