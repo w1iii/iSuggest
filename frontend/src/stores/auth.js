@@ -20,7 +20,12 @@ export const useAuthStore = defineStore('auth', () => {
     setAuth(response.data);
   }
 
-  function logout() {
+  async function logout() {
+    try {
+      await axios.post('/api/v1/logout');
+    } catch {
+      // proceed even if API call fails
+    }
     token.value = null;
     user.value = null;
     localStorage.removeItem('access_token');

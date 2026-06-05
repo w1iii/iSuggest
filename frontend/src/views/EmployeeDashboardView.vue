@@ -1,5 +1,11 @@
 <script setup>
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { useAuthStore } from '@/stores/auth'
+import logo from '@/assets/logo.png'
+
+const router = useRouter()
+const authStore = useAuthStore()
 
 const title = ref('')
 const category = ref('')
@@ -12,12 +18,20 @@ function handleSubmit() {
 function handleSaveDraft() {
   // Static — no backend yet
 }
+
+async function handleLogout() {
+  try {
+    await authStore.logout()
+  } finally {
+    router.push('/login')
+  }
+}
 </script>
 
 <template>
   <div class="bg-surface text-on-surface font-body-md min-h-screen">
     <!-- Sidebar -->
-    <nav class="fixed left-0 top-[66px] h-[calc(100vh-66px)] flex flex-col p-4 border-r-2 border-primary bg-surface hidden md:flex w-[200px] z-20">
+    <nav class="fixed left-0 top-20 h-[calc(100vh-80px)] flex flex-col p-4 border-r-2 border-primary bg-background hidden md:flex w-[200px] z-20">
       <div class="flex flex-col gap-1 flex-grow">
         <a class="flex items-center gap-2 p-2 rounded text-on-surface-variant hover:bg-surface-container hover:text-primary transition-colors text-sm font-medium active:scale-95" href="#">
           <span class="material-symbols-outlined text-[20px]">lightbulb</span>
@@ -29,7 +43,7 @@ function handleSaveDraft() {
         </a>
       </div>
       <div class="mt-auto space-y-4">
-        <button class="w-full bg-primary text-surface py-3 rounded-full text-sm font-medium active:scale-90 flex items-center justify-center gap-1 cursor-pointer">
+        <button class="w-full bg-primary text-surface py-3 rounded-full text-sm font-medium active:scale-90 flex items-center justify-center gap-1 cursor-pointer" @click="handleLogout">
           <span class="material-symbols-outlined text-[18px]">logout</span>
           Logout
         </button>
@@ -37,28 +51,31 @@ function handleSaveDraft() {
     </nav>
 
     <!-- Top Nav -->
-    <header class="flex justify-between items-center px-6 py-3 sticky top-0 z-30 bg-surface/80 backdrop-blur-md border-b-2 border-primary w-full left-0">
-      <div class="flex items-center">
-        <span class="font-bold text-primary text-lg">InnovationHub</span>
-      </div>
-      <div class="flex items-center gap-4">
-        <div class="hidden lg:flex items-center gap-3">
-          <a class="text-sm text-secondary hover:text-tertiary-container transition-all" href="#">Settings</a>
-          <a class="text-sm text-secondary hover:text-tertiary-container transition-all" href="#">Support</a>
+    <header class="w-full top-0 sticky z-30 bg-background border-b-2 border-primary">
+      <nav class="flex justify-between items-center h-20 px-gutter max-w-page mx-auto">
+        <router-link to="/dashboard" class="flex items-center gap-3">
+          <img :src="logo" alt="iSuggest Logo" class="w-10 h-10 object-contain" />
+          <span class="font-headline-md text-headline-md font-bold text-primary">iSuggest</span>
+        </router-link>
+        <div class="flex items-center gap-4">
+          <div class="hidden lg:flex items-center gap-3">
+            <a class="text-sm text-secondary hover:text-tertiary-container transition-all" href="#">Settings</a>
+            <a class="text-sm text-secondary hover:text-tertiary-container transition-all" href="#">Support</a>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-primary cursor-pointer text-[22px]">notifications</span>
+            <img
+              alt="User Profile"
+              class="w-8 h-8 rounded-full border-2 border-primary object-cover"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuDyqql2psZptharucfNZGIrPwIypbnj2OVC6lr429hrbn7jFXNp1Pz_Bn9u3-SgQwrjbJxB_Ck9MjasSZAWPmVQ87nQsNHnZvF4cNE-BVkr_-Q85yABCmC_9ihHLBf5gOFRrVqaFwAZDau9aB66YIMSQfENzKUydkTKA_VDrez1agbWRCFMDewA_wOMi1IilAHtEs1ODlVHDXi5OmCaTOrNx8BXl-HDoa4zrMfUihTkAEPX2k8CbIX_RYT9mHnHodNgeJ31iEWOdao"
+            />
+          </div>
         </div>
-        <div class="flex items-center gap-2">
-          <span class="material-symbols-outlined text-primary cursor-pointer text-[22px]">notifications</span>
-          <img
-            alt="User Profile"
-            class="w-8 h-8 rounded-full border-2 border-primary object-cover"
-            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDyqql2psZptharucfNZGIrPwIypbnj2OVC6lr429hrbn7jFXNp1Pz_Bn9u3-SgQwrjbJxB_Ck9MjasSZAWPmVQ87nQsNHnZvF4cNE-BVkr_-Q85yABCmC_9ihHLBf5gOFRrVqaFwAZDau9aB66YIMSQfENzKUydkTKA_VDrez1agbWRCFMDewA_wOMi1IilAHtEs1ODlVHDXi5OmCaTOrNx8BXl-HDoa4zrMfUihTkAEPX2k8CbIX_RYT9mHnHodNgeJ31iEWOdao"
-          />
-        </div>
-      </div>
+      </nav>
     </header>
 
     <!-- Main Content -->
-    <main class="md:ml-[200px] min-h-[calc(100vh-66px)] p-4 md:p-6 max-w-page mx-auto">
+    <main class="md:ml-[200px] min-h-[calc(100vh-80px)] p-4 md:p-6 max-w-page mx-auto">
       <!-- Hero -->
       <section class="mb-6">
         <h2 class="text-2xl md:text-3xl text-primary font-bold">
