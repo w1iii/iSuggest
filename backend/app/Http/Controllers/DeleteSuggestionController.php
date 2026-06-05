@@ -1,6 +1,3 @@
-
-
-
 <?php
 
 namespace App\Http\Controllers;
@@ -8,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Submission; // Remember, we are using the Submission model!
 
-class ManageSuggestionController extends Controller
+class DeleteSuggestionController extends Controller
 {
 
     // 2. DELETE a suggestion

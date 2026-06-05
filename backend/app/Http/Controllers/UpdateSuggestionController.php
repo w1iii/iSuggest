@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Submission; // Remember, we are using the Submission model!
 
-class ManageSuggestionController extends Controller
+class UpdateSuggestionController extends Controller
 {
     // 1. UPDATE a suggestion
     public function update(Request $request, $id)
