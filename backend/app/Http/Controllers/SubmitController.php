@@ -15,6 +15,7 @@ class SubmitController extends Controller
             'title'       => $request->title,
             'description' => $request->description,
             'category'    => $request->category,
+            'user_id'     => auth()->id(),
         ]);
 
         // Return the JSON response e
