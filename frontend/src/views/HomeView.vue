@@ -1,4 +1,5 @@
 <script setup>
+import logo from '@/assets/logo.png'
 import { ref, onMounted, onUnmounted } from 'vue'
 
 const cursor = ref(null)
@@ -58,7 +59,16 @@ onMounted(() => {
 
     <header class="w-full top-0 sticky z-50 bg-background border-b-2 border-primary">
       <nav class="flex justify-between items-center h-20 px-gutter max-w-page mx-auto">
-        <div class="font-headline-md text-headline-md font-bold text-primary">InnovationHub</div>
+        <div class="flex items-center gap-3">
+  <img
+    :src="logo"
+    alt="iSuggest Logo"
+    class="w-10 h-10 object-contain"
+  />
+      <span class="font-headline-md text-headline-md font-bold text-primary">
+       iSuggest
+      </span>
+      </div>
         <div class="hidden md:flex space-x-8 items-center">
           <a class="text-primary font-bold border-b-2 border-primary pb-1 font-body-md text-body-md cursor-pointer active:opacity-80" href="#">Employee Portal</a>
           <a class="text-on-surface-variant font-body-md text-body-md cursor-pointer hover:text-primary transition-colors duration-200 active:opacity-80" href="#">Admin Portal</a>
@@ -76,21 +86,19 @@ onMounted(() => {
           <div class="lg:col-span-7 z-10">
             <div class="mb-6 inline-flex items-center gap-2 bg-secondary-fixed text-on-secondary-fixed px-4 py-1 rounded-full text-label-md font-label-md">
               <span class="material-symbols-outlined text-[18px]">auto_awesome</span>
-              Human-Led, AI-Enhanced
+              
             </div>
             <h1 class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg text-primary mb-8">
-              The future is built on <span class="scribble-highlight">Innovation</span>.
+              The future is built on <span class="scribble-highlight">iSuggest</span>.
             </h1>
             <p class="font-body-lg text-body-lg text-on-surface-variant mb-12 max-w-2xl">
-              A boutique digital space where artisanal ideas meet professional rigor. We bridge the gap between creative sparks and operational excellence.
+              "The future of workplace engagement begins with iSuggest. We connect innovative thinking with strategic action, transforming everyday suggestions into opportunities for continuous improvement."
             </p>
             <div class="flex flex-wrap gap-4">
               <button class="bg-primary text-background px-10 py-4 rounded-full font-headline-md text-body-lg hover:scale-105 transition-transform active:opacity-90">
                 Get Started
               </button>
-              <button class="border-2 border-primary text-primary px-10 py-4 rounded-full font-headline-md text-body-lg hover:bg-primary hover:text-background transition-all">
-                View Portfolio
-              </button>
+      
             </div>
           </div>
           <div class="lg:col-span-5 relative">
@@ -141,7 +149,7 @@ onMounted(() => {
               </div>
               <h3 class="font-headline-md text-headline-md text-primary mb-4">For Administrators</h3>
               <p class="font-body-md text-body-md text-on-surface-variant mb-8">
-                Manage the innovation pipeline with precision. Access deep insights, track project health, and nurture the organization's growth.
+                Manage the iSuggest pipeline with precision. Access deep insights, track project health, and nurture the organization's growth.
               </p>
               <a class="inline-flex items-center gap-2 font-bold text-primary hover:gap-4 transition-all" href="#">
                 Access Dashboard
@@ -158,7 +166,7 @@ onMounted(() => {
             <div class="md:col-span-8 bg-surface-container border-2 border-primary rounded p-8 relative overflow-hidden">
               <div class="flex flex-col h-full justify-between">
                 <div>
-                  <h4 class="font-headline-md text-headline-md text-primary mb-4">The Innovation Lifecycle</h4>
+                  <h4 class="font-headline-md text-headline-md text-primary mb-4">The iSuggest Lifecycle</h4>
                   <p class="font-body-md text-body-md text-on-surface-variant max-w-md">
                     Our platform tracks every stage of growth—from a raw scribble to a polished, professional deployment.
                   </p>
@@ -200,9 +208,9 @@ onMounted(() => {
     <footer class="w-full mt-section-padding-desktop bg-surface-container border-t-2 border-primary">
       <div class="flex flex-col md:flex-row justify-between items-center py-section-padding-mobile px-gutter max-w-page mx-auto gap-8">
         <div class="flex flex-col items-center md:items-start gap-4">
-          <div class="font-headline-md text-headline-md font-bold text-primary">InnovationHub</div>
+          <div class="font-headline-md text-headline-md font-bold text-primary">iSuggest</div>
           <p class="font-label-md text-label-md text-on-surface-variant max-w-xs text-center md:text-left">
-            © 2024 InnovationHub. Handcrafted for Human Progress.
+            © 2026 iSuggest. Handcrafted for Human Progress.
           </p>
         </div>
         <div class="flex flex-wrap justify-center gap-8">
