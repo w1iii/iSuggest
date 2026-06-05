@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Submission extends Model
 {
-    protected $fillable = ['title', 'description', 'category'];
+    protected $fillable = ['title', 'description', 'category', 'user_id'];
 }
