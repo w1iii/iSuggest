@@ -9,7 +9,8 @@ Route::post('/v1/login', [AuthController::class, 'login'])->middleware('throttle
 
 Route::middleware('auth:sanctum')->prefix('v1')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
-    Route::get('/user', [ProfileController::class, 'show']);
+    Route::get('/user', [ProfileController::class, 'show']);    
+    Route::patch('/user', [ProfileController::class, 'update']);
 
     Route::middleware('role:Administrator')->group(function () {
         // Admin routes
