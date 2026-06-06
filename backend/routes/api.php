@@ -15,26 +15,27 @@ Route::post('/v1/register', [AuthController::class, 'register']);
 Route::post('/v1/login', [AuthController::class, 'login'])->middleware('throttle:6,1');
 
 Route::middleware('auth:sanctum')->prefix('v1')->group(function () {
-    //Auth Controllers
+    // Auth Controllers
     Route::post('/logout', [AuthController::class, 'logout']);
-    Route::get('/user', [\App\Http\Controllers\ProfileController::class, 'show']);    
-    Route::patch('/user', [\App\Http\Controllers\ProfileController::class, 'update']);
+    Route::get('/user', [ProfileController::class, 'show']);    
+    Route::patch('/user', [ProfileController::class, 'update']);
 
+    // Admin Specific Routes
     Route::middleware('role:Administrator')->prefix('admin')->group(function () {
         Route::post('/employees', [EmployeeController::class, 'store']);
     });
 
-    Route::middleware('role:Employee')->group(function () {
-        // Employee routes
-    });
-
-    //Suggestions Controller
+    // Global Authenticated Suggestion Routes (Accessible to Admins and Employees)
     Route::get('/suggestions/stats', [SuggestionsController::class, 'stats']);
-    Route::get('/suggestions/user-stats', [SuggestionsController::class, 'userStats']);
-    Route::get('/suggestions', [GetSuggestionsController::class, 'get']);
-    Route::post('/suggestions', [SubmitController::class, 'store']);
 
-    //Manage Suggestions (update/delete)
-    Route::put('/suggestions/{id}', [UpdateSuggestionController::class, 'update']);
-    Route::delete('/suggestions/{id}', [DeleteSuggestionController::class, 'destroy']);
+    // Protected Employee Suggestion Routes
+    Route::middleware('role:Employee')->group(function () {
+        Route::get('/suggestions/user-stats', [SuggestionsController::class, 'userStats']);
+        Route::get('/suggestions', [GetSuggestionsController::class, 'get']);
+        Route::post('/suggestions', [SubmitController::class, 'store']);
+
+        // Manage Suggestions (update/delete)
+        Route::put('/suggestions/{id}', [UpdateSuggestionController::class, 'update']);
+        Route::delete('/suggestions/{id}', [DeleteSuggestionController::class, 'destroy']);
+    });
 });
