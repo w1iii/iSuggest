@@ -75,7 +75,7 @@ async function handleLogout() {
     </header>
 
     <!-- Main Content -->
-    <main class="md:ml-[200px] min-h-[calc(100vh-80px)] p-4 md:p-6 max-w-page mx-auto">
+    <main class="md:ml-[232px] md:mr-[32px] min-h-[calc(100vh-80px)] p-4 md:p-6 max-w-page mx-auto">
       <!-- Hero -->
       <section class="mb-6">
         <h2 class="text-2xl md:text-3xl text-primary font-bold">

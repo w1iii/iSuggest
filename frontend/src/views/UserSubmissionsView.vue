@@ -97,29 +97,31 @@ onMounted(fetchData)
     </header>
 
     <!-- Main Content -->
-    <main class="md:ml-[200px] min-h-[calc(100vh-80px)] p-4 md:p-6 max-w-page mx-auto">
+    <main class="md:ml-[232px] md:mr-[32px] min-h-[calc(100vh-80px)] p-4 md:p-6 max-w-page mx-auto">
       <!-- Page Header -->
-      <div class="mb-16 relative">
-        <h2 class="font-headline-lg text-headline-lg text-primary mb-4 inline-block scribble-underline">
-          My Submissions
-        </h2>
-        <p class="font-body-lg text-body-lg text-secondary max-w-2xl">
+      <div class="mb-6">
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-2xl md:text-3xl text-primary font-bold scribble-underline">
+            My Submissions
+          </h2>
+          <svg class="text-tertiary-fixed-dim hidden lg:block w-16 h-16 flex-shrink-0" viewBox="0 0 100 100">
+            <path d="M10 10 Q 50 10 90 90 M 90 90 L 70 85 M 90 90 L 85 70" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="4"></path>
+          </svg>
+        </div>
+        <p class="text-sm text-secondary max-w-2xl mt-1">
           Review and track the progress of your artisanal insights. Every idea is a stitch in our collective tapestry.
         </p>
-        <svg class="scribble-arrow top-0 right-0 text-tertiary-fixed-dim hidden lg:block" viewBox="0 0 100 100">
-          <path d="M10 10 Q 50 10 90 90 M 90 90 L 70 85 M 90 90 L 85 70" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="4"></path>
-        </svg>
       </div>
 
       <!-- Dashboard Stats / Filters -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-gutter mb-12">
-        <div class="p-6 bg-surface-container-low border-2 border-primary rounded-lg">
-          <p class="font-label-md text-label-md text-secondary uppercase tracking-wider mb-2">Active</p>
-          <p class="font-headline-md text-headline-md text-primary">{{ stats.active }} Ideas</p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-12">
+        <div class="p-4 bg-surface border-2 border-primary rounded-lg">
+          <p class="text-xs text-secondary uppercase tracking-wider mb-2">Active</p>
+          <p class="text-2xl font-extrabold text-primary">{{ stats.active }} Ideas</p>
         </div>
-        <div class="p-6 bg-tertiary-fixed border-2 border-primary rounded-lg">
-          <p class="font-label-md text-label-md text-on-tertiary-fixed uppercase tracking-wider mb-2">Approved</p>
-          <p class="font-headline-md text-headline-md text-primary">{{ stats.approved }} Total</p>
+        <div class="p-4 bg-tertiary-fixed-dim border-2 border-primary rounded-lg">
+          <p class="text-xs text-primary uppercase tracking-wider mb-2">Approved</p>
+          <p class="text-2xl font-extrabold text-primary">{{ stats.approved }} Total</p>
         </div>
       </div>
 
@@ -131,8 +133,8 @@ onMounted(fetchData)
       <!-- Empty State -->
       <div v-else-if="submissions.length === 0" class="bg-surface-container-lowest border-2 border-primary rounded-lg p-12 text-center">
         <span class="material-symbols-outlined text-5xl text-tertiary-fixed-dim mb-4">lightbulb</span>
-        <h3 class="font-headline-md text-headline-md text-primary mb-2">No submissions yet</h3>
-        <p class="font-body-md text-body-md text-secondary mb-6">Your first big idea is waiting to be born.</p>
+        <h3 class="text-xl font-bold text-primary mb-2">No submissions yet</h3>
+        <p class="text-sm text-secondary mb-6">Your first big idea is waiting to be born.</p>
         <router-link class="inline-flex items-center gap-2 px-6 py-3 bg-primary text-surface rounded-full font-bold text-sm hover:opacity-90 active:scale-95 transition-all" to="/dashboard">
           <span>Submit Your First Idea</span>
           <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
@@ -145,28 +147,28 @@ onMounted(fetchData)
           <table class="w-full text-left border-collapse">
             <thead>
               <tr class="bg-surface-container-high border-b-2 border-primary">
-                <th class="p-6 font-label-md text-label-md text-primary">Title</th>
-                <th class="p-6 font-label-md text-label-md text-primary">Date Submitted</th>
-                <th class="p-6 font-label-md text-label-md text-primary">Status</th>
-                <th class="p-6 font-label-md text-label-md text-primary text-right">Action</th>
+                <th class="p-6 text-sm font-semibold text-primary">Title</th>
+                <th class="p-6 text-sm font-semibold text-primary">Date Submitted</th>
+                <th class="p-6 text-sm font-semibold text-primary">Status</th>
+                <th class="p-6 text-sm font-semibold text-primary text-right">Action</th>
               </tr>
             </thead>
             <tbody class="divide-y divide-outline-variant">
               <tr v-for="sub in submissions" :key="sub.id" class="group hover:bg-surface-container-low transition-colors">
                 <td class="p-6">
                   <div class="flex flex-col">
-                    <span class="font-body-md text-body-md text-primary font-bold">{{ sub.title }}</span>
+                    <span class="text-sm font-bold text-primary">{{ sub.title }}</span>
                     <span class="text-xs text-secondary mt-1">{{ sub.category }}</span>
                   </div>
                 </td>
-                <td class="p-6 font-body-md text-body-md text-secondary">{{ formatDate(sub.created_at) }}</td>
+                <td class="p-6 text-sm text-secondary">{{ formatDate(sub.created_at) }}</td>
                 <td class="p-6">
-                  <span class="px-4 py-1 rounded-full font-label-md text-xs border border-primary" :class="statusMap[sub.status]?.class || 'bg-surface-container-high text-on-surface-variant'">
+                  <span class="px-4 py-1 rounded-full text-xs font-semibold border border-primary" :class="statusMap[sub.status]?.class || 'bg-surface-container-high text-on-surface-variant'">
                     {{ statusMap[sub.status]?.label || sub.status }}
                   </span>
                 </td>
                 <td class="p-6 text-right">
-                  <a class="inline-flex items-center gap-1 text-primary font-label-md hover:underline decoration-tertiary-fixed-dim decoration-2 underline-offset-4" href="#">
+                  <a class="inline-flex items-center gap-1 text-primary text-sm font-semibold hover:underline decoration-tertiary-fixed-dim decoration-2 underline-offset-4" href="#">
                     View Details
                     <span class="material-symbols-outlined text-sm">arrow_forward</span>
                   </a>
@@ -176,13 +178,13 @@ onMounted(fetchData)
           </table>
         </div>
         <div class="p-6 flex items-center justify-between border-t-2 border-primary bg-surface-container-low">
-          <span class="font-label-md text-label-md text-secondary">Showing 1-{{ submissions.length }} of {{ stats.total }} submissions</span>
+          <span class="text-sm font-semibold text-secondary">Showing 1-{{ submissions.length }} of {{ stats.total }} submissions</span>
           <div class="flex gap-2">
             <button class="h-10 w-10 border-2 border-primary rounded-full flex items-center justify-center hover:bg-tertiary-fixed transition-colors disabled:opacity-50" disabled>
               <span class="material-symbols-outlined">chevron_left</span>
             </button>
-            <button class="h-10 w-10 border-2 border-primary rounded-full flex items-center justify-center bg-primary text-on-primary font-label-md">1</button>
-            <button v-if="stats.total > submissions.length" class="h-10 w-10 border-2 border-primary rounded-full flex items-center justify-center hover:bg-tertiary-fixed transition-colors font-label-md">2</button>
+            <button class="h-10 w-10 border-2 border-primary rounded-full flex items-center justify-center bg-primary text-on-primary text-sm font-semibold">1</button>
+            <button v-if="stats.total > submissions.length" class="h-10 w-10 border-2 border-primary rounded-full flex items-center justify-center hover:bg-tertiary-fixed transition-colors text-sm font-semibold">2</button>
             <button class="h-10 w-10 border-2 border-primary rounded-full flex items-center justify-center hover:bg-tertiary-fixed transition-colors">
               <span class="material-symbols-outlined">chevron_right</span>
             </button>
@@ -194,8 +196,8 @@ onMounted(fetchData)
       <div class="mt-24 p-gutter border-2 border-primary rounded-xl relative overflow-hidden bg-primary-container text-on-primary-container">
         <div class="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
           <div>
-            <h3 class="font-headline-md text-headline-md mb-2">Need a spark?</h3>
-            <p class="font-body-md text-body-md opacity-80">Explore trending community challenges to fuel your next submission.</p>
+            <h3 class="text-xl font-bold text-on-primary-container mb-2">Need a spark?</h3>
+            <p class="text-sm opacity-80">Explore trending community challenges to fuel your next submission.</p>
           </div>
           <button class="px-8 py-4 bg-tertiary-fixed text-primary rounded-full font-bold hover:scale-105 active:scale-95 transition-transform whitespace-nowrap">
             Explore Challenges

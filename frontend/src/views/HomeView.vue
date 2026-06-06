@@ -199,9 +199,72 @@ onMounted(() => {
           </div>
         </div>
       </section>
+      <section id="about" class="bg-surface-container-lowest py-section-padding-mobile md:py-section-padding-desktop">
+        <div class="max-w-page mx-auto px-gutter">
+          <div class="text-center mb-16">
+            <h2 class="font-headline-lg text-headline-lg text-primary mb-4">About iSuggest</h2>
+            <div class="w-24 h-1 bg-tertiary-fixed mx-auto"></div>
+          </div>
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
+            <div class="relative">
+              <div class="w-full aspect-square bg-surface-container-high rounded overflow-hidden border-2 border-primary -rotate-1 hover:rotate-0 transition-transform duration-500">
+                <img
+                  alt="Team collaboration"
+                  class="w-full h-full object-cover"
+                  src="https://images.pexels.com/photos/3183183/pexels-photo-3183183.jpeg"
+                />
+              </div>
+              <div class="absolute -bottom-6 -right-6 w-32 h-32 bg-primary/10 rounded-full blur-2xl pointer-events-none"></div>
+            </div>
+            <div class="space-y-6">
+              <h3 class="font-headline-md text-headline-md text-primary">Our Story</h3>
+              <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+                iSuggest was born from a simple belief: the best ideas come from the people on the ground. 
+                We built this platform to bridge the gap between frontline employees and decision-makers, 
+                transforming workplace suggestions into actionable innovations.
+              </p>
+              <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+                Every feature is designed to amplify your voice, streamline feedback, and create a culture 
+                where every suggestion matters — regardless of role or rank.
+              </p>
+              <div class="grid grid-cols-3 gap-4 pt-4">
+                <div class="text-center">
+                  <div class="text-display-lg-mobile font-bold text-primary">500+</div>
+                  <div class="text-label-md text-on-surface-variant">Ideas Submitted</div>
+                </div>
+                <div class="text-center">
+                  <div class="text-display-lg-mobile font-bold text-primary">84%</div>
+                  <div class="text-label-md text-on-surface-variant">Implementation</div>
+                </div>
+                <div class="text-center">
+                  <div class="text-display-lg-mobile font-bold text-primary">1K+</div>
+                  <div class="text-label-md text-on-surface-variant">Active Users</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="bg-background border-2 border-primary rounded-lg p-8 text-center hover:bg-primary-fixed transition-colors duration-300">
+              <span class="material-symbols-outlined text-[40px] text-primary mb-4">visibility</span>
+              <h4 class="font-headline-md text-headline-md text-primary mb-2">Our Mission</h4>
+              <p class="font-body-md text-body-md text-on-surface-variant">Empower every employee to shape the future of their workplace through transparent, impactful idea sharing.</p>
+            </div>
+            <div class="bg-background border-2 border-primary rounded-lg p-8 text-center hover:bg-primary-fixed transition-colors duration-300">
+              <span class="material-symbols-outlined text-[40px] text-primary mb-4">favorite</span>
+              <h4 class="font-headline-md text-headline-md text-primary mb-2">Our Values</h4>
+              <p class="font-body-md text-body-md text-on-surface-variant">Inclusion, transparency, and continuous improvement drive everything we build and believe in.</p>
+            </div>
+            <div class="bg-background border-2 border-primary rounded-lg p-8 text-center hover:bg-primary-fixed transition-colors duration-300">
+              <span class="material-symbols-outlined text-[40px] text-primary mb-4">groups</span>
+              <h4 class="font-headline-md text-headline-md text-primary mb-2">Our People</h4>
+              <p class="font-body-md text-body-md text-on-surface-variant">A diverse team of engineers, designers, and workplace advocates committed to human-centric innovation.</p>
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
 
-    <footer id="about" class="w-full mt-section-padding-desktop bg-surface-container border-t-2 border-primary">
+    <footer class="w-full bg-surface-container border-t-2 border-primary">
       <div class="flex flex-col md:flex-row justify-between items-center py-section-padding-mobile px-gutter max-w-page mx-auto gap-8">
         <div class="flex flex-col items-center md:items-start gap-4">
           <div class="font-headline-md text-headline-md font-bold text-primary">iSuggest</div>
