@@ -30,6 +30,7 @@ Route::middleware('auth:sanctum')->prefix('v1')->group(function () {
 
     //Suggestions Controller
     Route::get('/suggestions/stats', [SuggestionsController::class, 'stats']);
+    Route::get('/suggestions/user-stats', [SuggestionsController::class, 'userStats']);
     Route::get('/suggestions', [GetSuggestionsController::class, 'get']);
     Route::post('/suggestions', [SubmitController::class, 'store']);
 

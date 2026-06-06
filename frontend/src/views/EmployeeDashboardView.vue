@@ -33,14 +33,14 @@ async function handleLogout() {
     <!-- Sidebar -->
     <nav class="fixed left-0 top-20 h-[calc(100vh-80px)] flex flex-col p-4 border-r-2 border-primary bg-background hidden md:flex w-[200px] z-20">
       <div class="flex flex-col gap-1 flex-grow">
-        <a class="flex items-center gap-2 p-2 rounded text-on-surface-variant hover:bg-surface-container hover:text-primary transition-colors text-sm font-medium active:scale-95" href="#">
+        <router-link class="flex items-center gap-2 p-2 rounded text-on-surface-variant hover:bg-surface-container hover:text-primary transition-colors text-sm font-medium active:scale-95" to="/dashboard">
           <span class="material-symbols-outlined text-[20px]">lightbulb</span>
           <span>Submit Suggestion</span>
-        </a>
-        <a class="flex items-center gap-2 p-2 rounded text-on-surface-variant hover:bg-surface-container hover:text-primary transition-colors text-sm font-medium active:scale-95" href="#">
+        </router-link>
+        <router-link class="flex items-center gap-2 p-2 rounded text-on-surface-variant hover:bg-surface-container hover:text-primary transition-colors text-sm font-medium active:scale-95" to="/my-submissions">
           <span class="material-symbols-outlined text-[20px]">list_alt</span>
           <span>My Submissions</span>
-        </a>
+        </router-link>
       </div>
       <div class="mt-auto space-y-4">
         <button class="w-full bg-primary text-surface py-3 rounded-full text-sm font-medium active:scale-90 flex items-center justify-center gap-1 cursor-pointer" @click="handleLogout">
@@ -176,18 +176,18 @@ async function handleLogout() {
 
     <!-- Mobile Bottom Nav -->
     <nav class="md:hidden fixed bottom-0 left-0 w-full bg-surface border-t-2 border-primary flex justify-around items-center py-3 z-50">
-      <a class="flex flex-col items-center gap-1 text-secondary" href="#">
+      <router-link class="flex flex-col items-center gap-1 text-secondary" to="/dashboard">
         <span class="material-symbols-outlined">dashboard</span>
         <span class="text-[10px] font-label-md">Home</span>
-      </a>
-      <a class="flex flex-col items-center gap-1 text-primary font-bold" href="#">
+      </router-link>
+      <router-link class="flex flex-col items-center gap-1 text-primary font-bold" to="/dashboard">
         <span class="material-symbols-outlined">lightbulb</span>
         <span class="text-[10px] font-label-md">Suggest</span>
-      </a>
-      <a class="flex flex-col items-center gap-1 text-secondary" href="#">
+      </router-link>
+      <router-link class="flex flex-col items-center gap-1 text-secondary" to="/my-submissions">
         <span class="material-symbols-outlined">list_alt</span>
         <span class="text-[10px] font-label-md">My Ideas</span>
-      </a>
+      </router-link>
       <a class="flex flex-col items-center gap-1 text-secondary" href="#">
         <span class="material-symbols-outlined">person</span>
         <span class="text-[10px] font-label-md">Profile</span>
