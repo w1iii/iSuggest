@@ -26,8 +26,10 @@ Route::middleware('auth:sanctum')->prefix('v1')->group(function () {
     //Suggestions Controller
     Route::get('/suggestions', [GetSuggestionsController::class, 'get']);
     Route::post('/suggestions', [SubmitController::class, 'store']);
+    Route::get('/suggestions/recent', [GetRecentSuggestionsController::class, 'get']);
 
     //Manage Suggestions (update/delete)
     Route::put('/suggestions/{id}', [UpdateSuggestionController::class, 'update']);
     Route::delete('/suggestions/{id}', [DeleteSuggestionController::class, 'destroy']);
+
 });
