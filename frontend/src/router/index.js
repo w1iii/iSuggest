@@ -20,6 +20,12 @@ const router = createRouter({
       meta: { requiresAuth: true },
       component: () => import('../views/EmployeeDashboardView.vue'),
     },
+    {
+      path: '/my-submissions',
+      name: 'my-submissions',
+      meta: { requiresAuth: true },
+      component: () => import('../views/UserSubmissionsView.vue'),
+    },
   ],
 })
 
