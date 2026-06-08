@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Submission; // Remember, we are using the Submission model!
+use App\Models\Suggestion;
 
 class DeleteSuggestionController extends Controller
 {
@@ -12,7 +12,7 @@ class DeleteSuggestionController extends Controller
     public function destroy($id)
     {
         // Find the suggestion, but ONLY if it belongs to the logged-in user
-        $suggestion = Submission::where('user_id', auth()->id())->where('id', $id)->first();
+        $suggestion = Suggestion::where('user_id', auth()->id())->where('id', $id)->first();
 
         if (!$suggestion) {
             return response()->json([
