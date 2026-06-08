@@ -16,6 +16,6 @@ class GetSuggestionsController extends Controller
             'success' => true,
             'message' => 'Suggestions retrieved successfully',
             'data' => $suggestions
-        ], 201);
+        ], 200);
     }
 }
