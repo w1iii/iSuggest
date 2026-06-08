@@ -15,7 +15,7 @@ class UpdateSuggestionController extends Controller
 
         if (!$suggestion) {
             return response()->json([
-                'success' => false, 
+                'success' => false,
                 'message' => 'Suggestion not found or unauthorized'
             ], 404);
         }

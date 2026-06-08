@@ -19,3 +19,14 @@ frontend/dist/
 
 # Logs
 *.log
+
+# AI/System logs
+*.md
+*.log
+!README.md
+!docs/*.md
+
+# Environment and Dependencies
+node_modules/
+vendor/
+.env
