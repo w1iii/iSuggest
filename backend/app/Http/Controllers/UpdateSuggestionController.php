@@ -2,16 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Submission; // Remember, we are using the Submission model!
+use App\Http\Requests\UpdateSuggestionRequest;
+use App\Models\Suggestion;
 
 class UpdateSuggestionController extends Controller
 {
-    // 1. UPDATE a suggestion
-    public function update(Request $request, $id)
+    public function update(UpdateSuggestionRequest $request, $id)
     {
-        // Find the suggestion, but ONLY if it belongs to the logged-in user
-        $suggestion = Submission::where('user_id', auth()->id())->where('id', $id)->first();
+        $suggestion = Suggestion::where('user_id', auth()->id())->where('id', $id)->first();
 
         if (!$suggestion) {
             return response()->json([
@@ -20,11 +18,7 @@ class UpdateSuggestionController extends Controller
             ], 404);
         }
 
-        // Update the fields (if the user didn't send a new title, keep the old one)
-        $suggestion->title = $request->input('title', $suggestion->title);
-        $suggestion->description = $request->input('description', $suggestion->description);
-        $suggestion->category = $request->input('category', $suggestion->category);
-        $suggestion->save();
+        $suggestion->update($request->validated());
 
         return response()->json([
             'success' => true,
@@ -32,5 +26,4 @@ class UpdateSuggestionController extends Controller
             'data' => $suggestion
         ], 200);
     }
-
 }

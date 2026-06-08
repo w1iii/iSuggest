@@ -2,27 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Submission; 
+use App\Http\Requests\StoreSuggestionRequest;
+use App\Models\Suggestion;
 
 class SubmitController extends Controller
 {
-    // 2. Create a function to handle the saving process
-    public function store(Request $request)
+    public function store(StoreSuggestionRequest $request)
     {
-        // Save the incoming data to SQLite database
-        $submission = Submission::create([
-            'title'       => $request->title,
-            'description' => $request->description,
-            'category'    => $request->category,
-            'user_id'     => auth()->id(),
-        ]);
+        $suggestion = Suggestion::create(array_merge(
+            $request->validated(),
+            ['user_id' => auth()->id()]
+        ));
 
-        // Return the JSON response e
         return response()->json([
             'success' => true,
-            'message' => 'Submission saved successfully.',
-            'data'    => $submission,
+            'message' => 'Suggestion saved successfully.',
+            'data'    => $suggestion,
             'status'  => 200
         ]);
     }
