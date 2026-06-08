@@ -91,9 +91,9 @@ onMounted(() => {
               "The future of workplace engagement begins with iSuggest. We connect innovative thinking with strategic action, transforming everyday suggestions into opportunities for continuous improvement."
             </p>
             <div class="flex flex-wrap gap-4">
-              <button class="bg-primary text-background px-10 py-4 rounded-full font-headline-md text-body-lg hover:scale-105 transition-transform active:opacity-90">
+              <router-link to="/login" class="bg-primary text-background px-10 py-4 rounded-full font-headline-md text-body-lg hover:scale-105 transition-transform active:opacity-90">
                 Get Started
-              </button>
+              </router-link>
       
             </div>
           </div>

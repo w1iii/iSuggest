@@ -10,7 +10,15 @@ class GetSuggestionsController extends Controller
     public function get(Request $request)
     {
         $user = auth()->user();
-        $suggestions = Suggestion::where('user_id', $user->id)->orderBy('created_at', 'desc')->get();
+
+        $query = Suggestion::where('user_id', $user->id)->orderBy('created_at', 'desc');
+
+        $perPage = $request->integer('limit', 0);
+        if ($perPage > 0) {
+            $suggestions = $query->paginate($perPage);
+        } else {
+            $suggestions = $query->get();
+        }
 
         return response()->json([
             'success' => true,
