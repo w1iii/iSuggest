@@ -25,9 +25,11 @@ class SuggestionsController extends Controller
         $userId = auth()->id();
 
         $stats = [
-            'active' => Suggestion::where('user_id', $userId)->where('status', 'Pending')->count(),
-            'approved' => Suggestion::where('user_id', $userId)->where('status', 'Approved')->count(),
             'total' => Suggestion::where('user_id', $userId)->count(),
+            'pending' => Suggestion::where('user_id', $userId)->where('status', 'Pending')->count(),
+            'approved' => Suggestion::where('user_id', $userId)->where('status', 'Approved')->count(),
+            'rejected' => Suggestion::where('user_id', $userId)->where('status', 'Rejected')->count(),
+            'implemented' => Suggestion::where('user_id', $userId)->where('status', 'Implemented')->count(),
         ];
 
         return response()->json($stats);
