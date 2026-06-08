@@ -10,6 +10,8 @@ use App\Http\Controllers\UpdateSuggestionController;
 use App\Http\Controllers\DeleteSuggestionController;
 use App\Http\Controllers\GetSuggestionsController;
 use App\Http\Controllers\SuggestionsController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\SuggestionController;
 
 Route::post('/v1/register', [AuthController::class, 'register']);
 Route::post('/v1/login', [AuthController::class, 'login'])->middleware('throttle:6,1');
@@ -23,6 +25,12 @@ Route::middleware('auth:sanctum')->prefix('v1')->group(function () {
     // Admin Specific Routes
     Route::middleware('role:Administrator')->prefix('admin')->group(function () {
         Route::post('/employees', [EmployeeController::class, 'store']);
+        Route::get('/dashboard/stats', [DashboardController::class, 'stats']);
+        Route::get('/dashboard/activity', [DashboardController::class, 'activity']);
+        Route::get('/dashboard/categories', [DashboardController::class, 'categories']);
+        Route::get('/dashboard/contributors', [DashboardController::class, 'contributors']);
+        Route::get('/suggestions', [SuggestionController::class, 'index']);
+        Route::patch('/suggestions/{id}/status', [SuggestionController::class, 'updateStatus']);
     });
 
     // Global Authenticated Suggestion Routes (Accessible to Admins and Employees)
