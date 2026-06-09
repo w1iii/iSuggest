@@ -135,7 +135,7 @@ onMounted(() => {
                 id="email"
                 v-model="email"
                 class="w-full h-14 px-6 rounded-full border-2 border-primary bg-background focus:ring-2 focus:ring-tertiary-fixed outline-none transition-all placeholder:opacity-50 text-primary font-body-md"
-                placeholder="name@innovationhub.com"
+                placeholder="name@iSuggest.com"
                 type="email"
               />
             </div>
@@ -195,9 +195,9 @@ onMounted(() => {
     <footer class="w-full bg-surface-container border-t-2 border-primary mt-auto">
       <div class="flex flex-col md:flex-row justify-between items-center py-10 px-gutter max-w-page mx-auto gap-6">
         <div class="flex items-center gap-2">
-          <span class="font-headline-md text-headline-md font-bold text-primary">InnovationHub</span>
+          <span class="font-headline-md text-headline-md font-bold text-primary">iSuggest</span>
         </div>
-        <p class="font-label-md text-label-md text-on-surface-variant">© 2024 InnovationHub. Handcrafted for Human Progress.</p>
+        <p class="font-label-md text-label-md text-on-surface-variant">© 2026 iSuggest. Handcrafted for Human Progress.</p>
         <div class="flex gap-6">
           <a class="font-label-md text-label-md text-on-surface-variant hover:underline decoration-tertiary-container decoration-4 transition-all duration-300" href="#">Privacy Policy</a>
           <a class="font-label-md text-label-md text-on-surface-variant hover:underline decoration-tertiary-container decoration-4 transition-all duration-300" href="#">Terms of Service</a>
