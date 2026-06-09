@@ -29,6 +29,9 @@ Route::middleware('auth:sanctum')->prefix('v1')->group(function () {
         Route::get('/dashboard/activity', [DashboardController::class, 'activity']);
         Route::get('/dashboard/categories', [DashboardController::class, 'categories']);
         Route::get('/dashboard/contributors', [DashboardController::class, 'contributors']);
+        Route::get('/dashboard/top-ideas', [DashboardController::class, 'topIdeas']);
+        Route::get('/dashboard/trends', [DashboardController::class, 'trendsByPeriod']);
+        Route::get('/dashboard/report', [DashboardController::class, 'downloadReport']);
         Route::get('/suggestions', [SuggestionController::class, 'index']);
         Route::patch('/suggestions/{id}/status', [SuggestionController::class, 'updateStatus']);
     });

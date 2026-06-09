@@ -37,6 +37,7 @@ class AuthController extends Controller
         $request->validate([
             'email' => ['required', 'email'],
             'password' => ['required'],
+            'role' => ['sometimes', 'string', 'in:employee,admin'],
         ]);
 
         $user = User::where('email', $request->email)->first();
@@ -45,6 +46,25 @@ class AuthController extends Controller
             throw ValidationException::withMessages([
                 'email' => ['The provided credentials are incorrect.'],
             ]);
+        }
+
+        if ($request->role) {
+            $isEmployeePortal = $request->role === 'employee';
+            $isAdminPortal = $request->role === 'admin';
+            $userIsAdmin = in_array($user->role, ['Administrator', 'Super Administrator']);
+            $userIsEmployee = $user->role === 'Employee';
+
+            if ($isAdminPortal && !$userIsAdmin) {
+                throw ValidationException::withMessages([
+                    'role' => ['This account does not have admin access. Please use the Employee Portal.'],
+                ]);
+            }
+
+            if ($isEmployeePortal && !$userIsEmployee) {
+                throw ValidationException::withMessages([
+                    'role' => ['This account does not have employee access. Please use the Admin Portal.'],
+                ]);
+            }
         }
 
         $token = $user->createToken('auth_token')->plainTextToken;

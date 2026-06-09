@@ -28,7 +28,7 @@ class SuggestionController extends Controller
     public function updateStatus(Request $request, $id)
     {
         $validated = $request->validate([
-            'status' => ['required', 'string', 'in:Pending,Approved,Rejected,Implemented'],
+            'status' => ['required', 'string', 'in:Pending,In Review,Approved,Rejected,Implemented'],
             'admin_remarks' => ['nullable', 'string', 'max:1000'],
         ]);
 

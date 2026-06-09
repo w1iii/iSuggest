@@ -17,8 +17,44 @@ async function handleLogout() {
 
 <template>
   <div class="bg-surface text-on-surface font-body-md min-h-screen">
-    <!-- Sidebar -->
-    <nav class="fixed left-0 top-20 h-[calc(100vh-80px)] flex flex-col p-4 border-r-2 border-primary bg-background hidden md:flex w-[200px] z-20">
+    <!-- Admin Sidebar -->
+    <aside v-if="authStore.isAdmin" class="fixed left-0 top-20 h-[calc(100vh-80px)] flex flex-col p-4 border-r-2 border-primary bg-background hidden md:flex w-[200px] z-20">
+      <nav class="flex flex-col gap-1 flex-grow pt-4">
+        <router-link 
+          class="flex items-center gap-2 p-2 rounded text-on-surface-variant hover:bg-surface-container hover:text-primary transition-colors text-sm font-medium active:scale-95" 
+          to="/admin/dashboard"
+        >
+          <span class="material-symbols-outlined text-[20px]">dashboard</span>
+          <span>Dashboard</span>
+        </router-link>
+        <router-link 
+          class="flex items-center gap-2 p-2 rounded text-on-surface-variant hover:bg-surface-container hover:text-primary transition-colors text-sm font-medium active:scale-95" 
+          to="/admin/suggestions"
+        >
+          <span class="material-symbols-outlined text-[20px]">view_kanban</span>
+          <span>Kanban</span>
+        </router-link>
+        <router-link 
+          class="flex items-center gap-2 p-2 rounded text-on-surface-variant hover:bg-surface-container hover:text-primary transition-colors text-sm font-medium active:scale-95" 
+          to="/admin/analytics"
+        >
+          <span class="material-symbols-outlined text-[20px]">analytics</span>
+          <span>Analytics</span>
+        </router-link>
+      </nav>
+      <div class="mt-auto space-y-4">
+        <button 
+          class="w-full bg-primary text-surface py-3 rounded-full text-sm font-medium active:scale-90 flex items-center justify-center gap-1 cursor-pointer" 
+          @click="handleLogout"
+        >
+          <span class="material-symbols-outlined text-[18px]">logout</span>
+          Logout
+        </button>
+      </div>
+    </aside>
+
+    <!-- Employee Sidebar -->
+    <nav v-else class="fixed left-0 top-20 h-[calc(100vh-80px)] flex flex-col p-4 border-r-2 border-primary bg-background hidden md:flex w-[200px] z-20">
       <div class="flex flex-col gap-1 flex-grow">
         <router-link class="flex items-center gap-2 p-2 rounded text-on-surface-variant hover:bg-surface-container hover:text-primary transition-colors text-sm font-medium active:scale-95" to="/dashboard">
           <span class="material-symbols-outlined text-[20px]">lightbulb</span>
@@ -40,7 +76,7 @@ async function handleLogout() {
     <!-- Top Nav -->
     <header class="w-full top-0 sticky z-30 bg-background border-b-2 border-primary">
       <nav class="flex justify-between items-center h-20 px-gutter max-w-page mx-auto">
-        <router-link to="/dashboard" class="flex items-center gap-3">
+        <router-link :to="authStore.isAdmin ? '/admin/dashboard' : '/dashboard'" class="flex items-center gap-3">
           <img :src="logo" alt="iSuggest Logo" class="w-10 h-10 object-contain" />
           <span class="font-headline-md text-headline-md font-bold text-primary">iSuggest</span>
         </router-link>
@@ -64,9 +100,9 @@ async function handleLogout() {
     </header>
 
     <!-- Main Content -->
-    <main class="md:ml-[232px] md:mr-[32px] min-h-[calc(100vh-80px)] p-4 md:p-6 max-w-page mx-auto">
+    <main :class="authStore.isAdmin ? 'md:ml-[232px]' : 'md:ml-[232px]' + ' md:mr-[32px] min-h-[calc(100vh-80px)] p-4 md:p-6 max-w-page mx-auto'">
       <!-- Profile Header Section -->
-      <section class="mb-12 relative">
+      <section class="mb-12 pt-8 relative">
         <div class="flex flex-col md:flex-row gap-8 items-start md:items-end relative z-10">
           <div class="relative group">
             <div class="absolute -top-4 -left-4 w-40 h-40 bg-tertiary-fixed-dim/30 rounded-full blur-2xl group-hover:bg-tertiary-fixed-dim/50 transition-all"></div>
@@ -209,17 +245,17 @@ async function handleLogout() {
 
     <!-- Mobile Bottom Nav -->
     <nav class="md:hidden fixed bottom-0 left-0 w-full bg-surface border-t-2 border-primary flex justify-around items-center py-3 z-50">
-      <router-link class="flex flex-col items-center gap-1 text-secondary" to="/dashboard">
+      <router-link :class="authStore.isAdmin ? 'flex flex-col items-center gap-1 text-secondary' : 'flex flex-col items-center gap-1 text-secondary'" :to="authStore.isAdmin ? '/admin/dashboard' : '/dashboard'">
         <span class="material-symbols-outlined">dashboard</span>
         <span class="text-[10px] font-label-md">Home</span>
       </router-link>
-      <router-link class="flex flex-col items-center gap-1 text-secondary" to="/dashboard">
-        <span class="material-symbols-outlined">lightbulb</span>
-        <span class="text-[10px] font-label-md">Suggest</span>
+      <router-link class="flex flex-col items-center gap-1 text-secondary" :to="authStore.isAdmin ? '/admin/dashboard' : '/dashboard'">
+        <span class="material-symbols-outlined">{{ authStore.isAdmin ? 'view_kanban' : 'lightbulb' }}</span>
+        <span class="text-[10px] font-label-md">{{ authStore.isAdmin ? 'Kanban' : 'Suggest' }}</span>
       </router-link>
-      <router-link class="flex flex-col items-center gap-1 text-secondary" to="/my-submissions">
-        <span class="material-symbols-outlined">list_alt</span>
-        <span class="text-[10px] font-label-md">My Ideas</span>
+      <router-link class="flex flex-col items-center gap-1 text-secondary" :to="authStore.isAdmin ? '/admin/analytics' : '/my-submissions'">
+        <span class="material-symbols-outlined">{{ authStore.isAdmin ? 'analytics' : 'list_alt' }}</span>
+        <span class="text-[10px] font-label-md">{{ authStore.isAdmin ? 'Analytics' : 'My Ideas' }}</span>
       </router-link>
       <router-link class="flex flex-col items-center gap-1 text-primary font-bold" to="/profile">
         <span class="material-symbols-outlined">person</span>
