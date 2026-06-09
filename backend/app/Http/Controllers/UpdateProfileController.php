@@ -31,7 +31,7 @@ class UpdateProfileController extends Controller
 
         return response()->json([
             'message' => 'Profile updated successfully',
-            'user' => $user,
+            'user' => $user->fresh(),
         ], 200);
     }
 }

@@ -41,4 +41,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(Suggestion::class);
     }
+
+    protected function profileImageUrl(): Attribute
+    {
+        return Attribute::get(function () {
+            if (!$this->image) {
+                return null;
+            }
+            return asset(Storage::url($this->image));
+        });
+    }
 }

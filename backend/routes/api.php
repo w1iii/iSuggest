@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UpdateProfileController;
 use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Controllers\SubmitController;
 use Illuminate\Http\Request;
