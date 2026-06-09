@@ -10,6 +10,7 @@ class UpdateProfileController extends Controller
 {
     public function update(Request $request): JsonResponse
     {
+        \Illuminate\Support\Facades\Log::info('Profile Update Request', ['has_file' => $request->hasFile('image')]);
         $user = $request->user();
 
         $validated = $request->validate([
