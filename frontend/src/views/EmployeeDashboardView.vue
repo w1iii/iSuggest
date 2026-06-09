@@ -78,6 +78,10 @@ onMounted(fetchDashboardData)
           <span class="material-symbols-outlined text-[20px]">list_alt</span>
           <span>My Submissions</span>
         </router-link>
+        <router-link v-if="authStore.isAdmin" class="flex items-center gap-2 p-2 rounded bg-tertiary-fixed-dim/30 text-primary font-semibold transition-colors text-sm active:scale-95 mt-4 border border-tertiary-fixed-dim" to="/admin/dashboard">
+          <span class="material-symbols-outlined text-[20px]">admin_panel_settings</span>
+          <span>Admin Panel</span>
+        </router-link>
       </div>
       <div class="mt-auto space-y-4">
         <button class="w-full bg-primary text-surface py-3 rounded-full text-sm font-medium active:scale-90 flex items-center justify-center gap-1 cursor-pointer" @click="handleLogout">

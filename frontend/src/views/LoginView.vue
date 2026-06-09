@@ -25,7 +25,7 @@ async function handleSubmit() {
   try {
     await authStore.login({ email: email.value, password: password.value })
     if (authStore.isAdmin) {
-      router.push('/dashboard')
+      router.push('/admin/dashboard')
     } else {
       router.push('/dashboard')
     }

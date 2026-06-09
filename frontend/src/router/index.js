@@ -32,16 +32,35 @@ const router = createRouter({
       meta: { requiresAuth: true },
       component: () => import('../views/UserProfileView.vue'),
     },
+    {
+      path: '/admin/dashboard',
+      name: 'admin-dashboard',
+      meta: { requiresAuth: true, requiresAdmin: true },
+      component: () => import('../views/AdminDashboardView.vue'),
+    },
+    {
+      path: '/admin/suggestions',
+      name: 'admin-suggestions',
+      meta: { requiresAuth: true, requiresAdmin: true },
+      component: () => import('../views/AdminSuggestionsView.vue'),
+    },
+    {
+      path: '/admin/analytics',
+      name: 'admin-analytics',
+      meta: { requiresAuth: true, requiresAdmin: true },
+      component: () => import('../views/AdminAnalyticsView.vue'),
+    },
   ],
 })
 
-router.beforeEach((to, from, next) => {
+router.beforeEach((to, from) => {
   const authStore = useAuthStore()
   if (to.meta.requiresAuth && !authStore.token) {
-    next('/login')
-  } else {
-    next()
+    return '/login'
+  } else if (to.meta.requiresAdmin && !authStore.isAdmin) {
+    return '/dashboard'
   }
+  // Allow navigation (return nothing = true)
 })
 
 export default router
