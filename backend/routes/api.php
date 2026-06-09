@@ -14,14 +14,13 @@ use App\Http\Controllers\SuggestionsController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\SuggestionController;
 
-Route::post('/v1/register', [AuthController::class, 'register']);
+Route::post('/v1/register', [AuthController::class, 'register'])->middleware('throttle:6,1');
 Route::post('/v1/login', [AuthController::class, 'login'])->middleware('throttle:6,1');
 
 Route::middleware('auth:sanctum')->prefix('v1')->group(function () {
     // Auth Controllers
     Route::post('/logout', [AuthController::class, 'logout']);
-    Route::get('/user', [ProfileController::class, 'show']);    
-    Route::patch('/user', [ProfileController::class, 'update']);
+    Route::get('/user', [ProfileController::class, 'show']);
     Route::post('/profile/update', [UpdateProfileController::class, 'update']);
 
     // Admin Specific Routes
@@ -35,16 +34,17 @@ Route::middleware('auth:sanctum')->prefix('v1')->group(function () {
         Route::get('/dashboard/top-ideas', [DashboardController::class, 'topIdeas']);
         Route::get('/dashboard/trends', [DashboardController::class, 'trendsByPeriod']);
         Route::get('/dashboard/report', [DashboardController::class, 'downloadReport']);
+        Route::get('/suggestions/statuses', [SuggestionController::class, 'statuses']);
         Route::get('/suggestions', [SuggestionController::class, 'index']);
         Route::patch('/suggestions/{id}/status', [SuggestionController::class, 'updateStatus']);
     });
 
     // Global Authenticated Suggestion Routes (Accessible to Admins and Employees)
     Route::get('/suggestions/stats', [SuggestionsController::class, 'stats']);
+    Route::get('/suggestions/user-stats', [SuggestionsController::class, 'userStats']);
 
     // Protected Employee Suggestion Routes
     Route::middleware('role:Employee')->group(function () {
-        Route::get('/suggestions/user-stats', [SuggestionsController::class, 'userStats']);
         Route::get('/suggestions', [GetSuggestionsController::class, 'get']);
         Route::post('/suggestions', [SubmitController::class, 'store']);
 

@@ -193,7 +193,7 @@ onMounted(fetchDashboardData)
           </div>
           <div class="mt-6 p-3 border-2 border-dashed border-surface/20 rounded-lg text-center">
             <p class="font-body-sm text-surface text-xs mb-2 italic">"True innovation starts with a single, handcrafted thought."</p>
-            <button class="w-full py-1.5 bg-surface text-primary rounded-full font-label-md text-xs hover:bg-tertiary-fixed transition-colors cursor-pointer">Download Report</button>
+            <button class="w-full py-1.5 bg-surface text-primary rounded-full font-label-md text-xs hover:bg-tertiary-fixed transition-colors cursor-pointer" @click="router.push('/admin/analytics')">Download Report</button>
           </div>
         </section>
       </div>

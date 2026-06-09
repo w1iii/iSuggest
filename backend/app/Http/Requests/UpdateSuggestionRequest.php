@@ -16,7 +16,7 @@ class UpdateSuggestionRequest extends FormRequest
         return [
             'title' => ['sometimes', 'required', 'string', 'max:255'],
             'description' => ['sometimes', 'required', 'string'],
-            'category' => ['sometimes', 'required', 'string', 'max:255'],
+            'category' => ['sometimes', 'required', 'string', 'in:' . implode(',', config('suggestions.categories'))],
         ];
     }
 }

@@ -15,8 +15,8 @@ class SuggestionFactory extends Factory
             'user_id' => User::factory(),
             'title' => $this->faker->sentence(),
             'description' => $this->faker->paragraph(),
-            'category' => $this->faker->randomElement(['Workplace', 'Technology', 'Process Improvement', 'Employee Welfare']),
-            'status' => $this->faker->randomElement(['Pending', 'Approved', 'Rejected', 'Implemented']),
+            'category' => $this->faker->randomElement(config('suggestions.categories')),
+            'status' => $this->faker->randomElement(config('suggestions.statuses')),
             'admin_remarks' => $this->faker->optional()->sentence(),
         ];
     }

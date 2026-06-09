@@ -8,6 +8,13 @@ use Illuminate\Http\Request;
 
 class SuggestionController extends Controller
 {
+    public function statuses()
+    {
+        return response()->json([
+            'statuses' => config('suggestions.statuses'),
+        ]);
+    }
+
     public function index(Request $request)
     {
         $query = Suggestion::with('user:id,name,email');
@@ -28,7 +35,7 @@ class SuggestionController extends Controller
     public function updateStatus(Request $request, $id)
     {
         $validated = $request->validate([
-            'status' => ['required', 'string', 'in:Pending,In Review,Approved,Rejected,Implemented'],
+            'status' => ['required', 'string', 'in:' . implode(',', config('suggestions.statuses'))],
             'admin_remarks' => ['nullable', 'string', 'max:1000'],
         ]);
 

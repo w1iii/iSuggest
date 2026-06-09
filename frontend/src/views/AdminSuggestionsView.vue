@@ -48,7 +48,6 @@ async function fetchSuggestions() {
       abortController.abort()
     }
     
-    console.log('[AdminSuggestions] Starting fetch...')
     loading.value = true
     abortController = new AbortController()
     
@@ -56,11 +55,8 @@ async function fetchSuggestions() {
       signal: abortController.signal
     })
     
-    console.log('[AdminSuggestions] Got response:', res.data)
-    
     // Only update if component still mounted
     if (!isMounted) {
-      console.log('[AdminSuggestions] Component unmounted, skipping update')
       return
     }
     
@@ -82,7 +78,6 @@ async function fetchSuggestions() {
       })
     }
 
-    console.log('[AdminSuggestions] Grouped data:', grouped)
     suggestions.value = grouped
   } catch (e) {
     // Ignore abort errors
@@ -91,7 +86,6 @@ async function fetchSuggestions() {
     }
   } finally {
     if (isMounted) {
-      console.log('[AdminSuggestions] Setting loading = false')
       loading.value = false
     }
   }
@@ -172,15 +166,12 @@ const handleSuggestionUpdated = (updatedData) => {
 
 onMounted(() => {
   isMounted = true
-  console.log('[AdminSuggestions] Mounted, fetching...')
   fetchSuggestions()
 })
 
 // Watch route to refetch when returning to suggestions page
 watch(() => route.name, (newRoute) => {
-  console.log('[AdminSuggestions] Route changed to:', newRoute)
   if (newRoute === 'admin-suggestions' && !loading.value) {
-    console.log('[AdminSuggestions] Refetching...')
     fetchSuggestions()
   }
 })

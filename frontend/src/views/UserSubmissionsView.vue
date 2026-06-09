@@ -9,7 +9,7 @@ const router = useRouter()
 const authStore = useAuthStore()
 
 const submissions = ref([])
-const stats = ref({ active: 0, approved: 0, total: 0 })
+const stats = ref({ pending: 0, approved: 0, total: 0 })
 const loading = ref(true)
 
 const statusMap = {
@@ -88,10 +88,16 @@ onMounted(fetchData)
             <span class="material-symbols-outlined text-primary cursor-pointer text-[22px]">notifications</span>
             <router-link to="/profile">
               <img
+                v-if="authStore.user?.profile_image_url"
+                :src="authStore.user.profile_image_url"
                 alt="User Profile"
                 class="w-8 h-8 rounded-full border-2 border-primary object-cover cursor-pointer"
                 :src="authStore.user?.profile_image_url || 'https://lh3.googleusercontent.com/aida-public/AB6AXuDyqql2psZptharucfNZGIrPwIypbnj2OVC6lr429hrbn7jFXNp1Pz_Bn9u3-SgQwrjbJxB_Ck9MjasSZAWPmVQ87nQsNHnZvF4cNE-BVkr_-Q85yABCmC_9ihHLBf5gOFRrVqaFwAZDau9aB66YIMSQfENzKUydkTKA_VDrez1agbWRCFMDewA_wOMi1IilAHtEs1ODlVHDXi5OmCaTOrNx8BXl-HDoa4zrMfUihTkAEPX2k8CbIX_RYT9mHnHodNgeJ31iEWOdao'"
               />
+              <span
+                v-else
+                class="material-symbols-outlined text-primary cursor-pointer text-[28px]"
+              >account_circle</span>
             </router-link>
           </div>
         </div>
@@ -119,7 +125,7 @@ onMounted(fetchData)
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-12">
         <div class="p-4 bg-surface border-2 border-primary rounded-lg">
           <p class="text-xs text-secondary uppercase tracking-wider mb-2">Active</p>
-          <p class="text-2xl font-extrabold text-primary">{{ stats.active }} Ideas</p>
+          <p class="text-2xl font-extrabold text-primary">{{ stats.pending }} Ideas</p>
         </div>
         <div class="p-4 bg-tertiary-fixed-dim border-2 border-primary rounded-lg">
           <p class="text-xs text-primary uppercase tracking-wider mb-2">Approved</p>

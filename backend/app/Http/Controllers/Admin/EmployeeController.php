@@ -29,7 +29,7 @@ class EmployeeController extends Controller
             $query->where('status', $request->status);
         }
 
-        $employees = $query->select('id', 'name', 'email', 'status', 'Title', 'PhoneNumber', 'created_at')
+        $employees = $query->select('id', 'name', 'email', 'status', 'title', 'created_at')
             ->latest()
             ->paginate($request->per_page ?? 15);
 
