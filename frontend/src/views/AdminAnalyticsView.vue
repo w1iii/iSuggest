@@ -228,7 +228,6 @@ async function downloadReport() {
             </p>
             <div class="flex flex-wrap gap-2">
               <button @click="downloadReport" class="bg-background text-primary font-bold py-2 px-4 rounded-full text-sm hover:bg-secondary-fixed transition-colors">Download Report</button>
-              <button class="border-2 border-background text-background font-bold py-2 px-4 rounded-full text-sm hover:bg-background hover:text-primary transition-all">View Methodology</button>
             </div>
           </div>
           <svg class="absolute top-1/2 left-1/3 -translate-x-1/2 -translate-y-1/2 w-80 h-40 opacity-20 pointer-events-none" viewBox="0 0 400 200">

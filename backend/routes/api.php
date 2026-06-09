@@ -24,6 +24,7 @@ Route::middleware('auth:sanctum')->prefix('v1')->group(function () {
 
     // Admin Specific Routes
     Route::middleware('role:Administrator')->prefix('admin')->group(function () {
+        Route::get('/employees', [EmployeeController::class, 'index']);
         Route::post('/employees', [EmployeeController::class, 'store']);
         Route::get('/dashboard/stats', [DashboardController::class, 'stats']);
         Route::get('/dashboard/activity', [DashboardController::class, 'activity']);

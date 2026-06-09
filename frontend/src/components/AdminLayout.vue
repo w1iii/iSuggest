@@ -53,6 +53,18 @@ async function handleLogout() {
         <router-link 
           :class="[
             'flex items-center gap-2 p-2 rounded transition-colors text-sm font-medium active:scale-95',
+            isActive('/admin/employees') 
+              ? 'bg-surface-container text-primary' 
+              : 'text-on-surface-variant hover:bg-surface-container hover:text-primary'
+          ]"
+          to="/admin/employees"
+        >
+          <span class="material-symbols-outlined text-[20px]">group</span>
+          <span>Employees</span>
+        </router-link>
+        <router-link 
+          :class="[
+            'flex items-center gap-2 p-2 rounded transition-colors text-sm font-medium active:scale-95',
             isActive('/admin/analytics') 
               ? 'bg-surface-container text-primary' 
               : 'text-on-surface-variant hover:bg-surface-container hover:text-primary'
