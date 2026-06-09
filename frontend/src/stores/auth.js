@@ -13,6 +13,7 @@ export const useAuthStore = defineStore('auth', () => {
   async function login(credentials) {
     const response = await axios.post('/api/v1/login', credentials);
     setAuth(response.data);
+    return response.data;
   }
 
   async function register(data) {

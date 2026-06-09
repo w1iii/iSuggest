@@ -23,14 +23,15 @@ async function handleSubmit() {
   error.value = ''
   loading.value = true
   try {
-    await authStore.login({ email: email.value, password: password.value })
+    await authStore.login({ email: email.value, password: password.value, role: role.value })
     if (authStore.isAdmin) {
       router.push('/admin/dashboard')
     } else {
       router.push('/dashboard')
     }
   } catch (err) {
-    error.value = err.response?.data?.message || 'Login failed. Please check your credentials.'
+    const errors = err.response?.data?.errors
+    error.value = errors ? Object.values(errors).flat()[0] : (err.response?.data?.message || 'Login failed. Please check your credentials.')
   } finally {
     loading.value = false
   }
