@@ -129,10 +129,13 @@ onMounted(() => {
               <p class="font-body-md text-body-md text-on-surface-variant mb-8">
                 Turn your "what-ifs" into reality. Submit ideas, collaborate with peers, and watch your creative vision transform into tangible impact.
               </p>
-              <a class="inline-flex items-center gap-2 font-bold text-primary hover:gap-4 transition-all" href="#">
-                Submit an Idea
-                <span class="material-symbols-outlined">arrow_forward</span>
-              </a>
+              <router-link
+                to="/login?role=employee"
+                class="inline-flex items-center gap-2 font-bold text-primary hover:gap-4 transition-all"
+>
+                 Submit an Idea
+              <span class="material-symbols-outlined">arrow_forward</span>
+              </router-link>
               <div class="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
                 <svg fill="none" height="40" viewBox="0 0 40 40" width="40">
                   <path d="M5 20 C 5 5, 35 5, 35 20 C 35 35, 5 35, 5 20" stroke="#06160f" stroke-dasharray="4 4" stroke-width="2" />
@@ -147,10 +150,13 @@ onMounted(() => {
               <p class="font-body-md text-body-md text-on-surface-variant mb-8">
                 Manage the iSuggest pipeline with precision. Access deep insights, track project health, and nurture the organization's growth.
               </p>
-              <a class="inline-flex items-center gap-2 font-bold text-primary hover:gap-4 transition-all" href="#">
-                Access Dashboard
-                <span class="material-symbols-outlined">arrow_forward</span>
-              </a>
+             <router-link
+                to="/login?role=admin"
+              class="inline-flex items-center gap-2 font-bold text-primary hover:gap-4 transition-all"
+>
+               Access Dashboard
+           <span class="material-symbols-outlined">arrow_forward</span>
+              </router-link>
             </div>
           </div>
         </div>

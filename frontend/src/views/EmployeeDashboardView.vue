@@ -205,7 +205,7 @@ onMounted(fetchDashboardData)
               <div class="min-w-0">
                 <h3 class="text-xs font-bold text-primary mb-1 scribble-circle inline-block">Why your idea matters</h3>
                 <p class="text-xs text-on-secondary-container leading-relaxed">
-                  At <span class="font-bold">InnovationHub</span>, we believe that the most powerful solutions come from the people who live the experience every day. Your perspective is the craftsmanship behind our progress.
+                  At <span class="font-bold">iSuggest</span>, we believe that the most powerful solutions come from the people who live the experience every day. Your perspective is the craftsmanship behind our progress.
                 </p>
               </div>
             </div>

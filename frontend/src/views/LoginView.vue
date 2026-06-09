@@ -1,10 +1,11 @@
 <script setup>
 import logo from '@/assets/logo.png'
 import { ref, onMounted, onUnmounted } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 
 const router = useRouter()
+const route = useRoute()
 const authStore = useAuthStore()
 
 const cursor = ref(null)
@@ -15,6 +16,9 @@ const remember = ref(false)
 const error = ref('')
 const loading = ref(false)
 
+let onMouseMove = null
+let interactiveEls = []
+
 function toggleRole(r) {
   role.value = r
 }
@@ -22,50 +26,66 @@ function toggleRole(r) {
 async function handleSubmit() {
   error.value = ''
   loading.value = true
+
   try {
-    await authStore.login({ email: email.value, password: password.value })
+    await authStore.login({
+      email: email.value,
+      password: password.value
+    })
+
     if (authStore.isAdmin) {
       router.push('/dashboard')
     } else {
       router.push('/dashboard')
     }
   } catch (err) {
-    error.value = err.response?.data?.message || 'Login failed. Please check your credentials.'
+    error.value =
+      err.response?.data?.message ||
+      'Login failed. Please check your credentials.'
   } finally {
     loading.value = false
   }
 }
 
 onMounted(() => {
+  role.value = route.query.role === 'admin' ? 'admin' : 'employee'
+
   const cursorEl = cursor.value
   if (!cursorEl) return
 
-  const onMouseMove = (e) => {
+  // Cursor movement
+  onMouseMove = (e) => {
     cursorEl.style.left = e.clientX + 'px'
     cursorEl.style.top = e.clientY + 'px'
   }
+
   document.addEventListener('mousemove', onMouseMove)
 
-  const interactiveEls = document.querySelectorAll('a, button')
+  // Hover effects
+  interactiveEls = document.querySelectorAll('a, button')
+
   const onEnter = () => {
-    cursorEl.style.transform = 'scale(2.5)'
+    cursorEl.style.transform = 'translate(-50%, -50%) scale(2.5)'
     cursorEl.style.backgroundColor = 'rgba(6, 22, 15, 0.1)'
   }
+
   const onLeave = () => {
-    cursorEl.style.transform = 'scale(1)'
+    cursorEl.style.transform = 'translate(-50%, -50%) scale(1)'
     cursorEl.style.backgroundColor = 'transparent'
   }
+
   interactiveEls.forEach(el => {
     el.addEventListener('mouseenter', onEnter)
     el.addEventListener('mouseleave', onLeave)
   })
+})
 
-  onUnmounted(() => {
-    document.removeEventListener('mousemove', onMouseMove)
-    interactiveEls.forEach(el => {
-      el.removeEventListener('mouseenter', onEnter)
-      el.removeEventListener('mouseleave', onLeave)
-    })
+onUnmounted(() => {
+  document.removeEventListener('mousemove', onMouseMove)
+
+  interactiveEls.forEach(el => {
+    el.removeEventListener('mouseenter', () => {})
+    el.removeEventListener('mouseleave', () => {})
   })
 })
 </script>
