@@ -178,8 +178,8 @@ async function handleLogout() {
         </div>
 
         <div class="md:col-span-4 bg-primary-container p-6 md:p-8 rounded-lg border-2 border-primary text-surface relative overflow-hidden">
-          <h3 class="text-xs font-semibold uppercase tracking-widest text-on-primary-container mb-8">Personal Impact</h3>
-          <div class="space-y-8">
+          <h3 class="text-xs font-semibold uppercase tracking-widest text-on-primary-container mb-8">Personal Impact</h3> 
+          <div class="space-y-8">        
             <div>
               <div class="flex items-baseline gap-2">
                 <span class="text-5xl font-extrabold text-tertiary-fixed">24</span>
@@ -187,13 +187,81 @@ async function handleLogout() {
               </div>
               <p class="text-xs font-semibold text-on-primary-container mt-1">Ideas Submitted</p>
             </div>
-            <div class="relative">
+            <div class="relative">      
               <div class="flex items-baseline gap-2">
                 <span class="text-5xl font-extrabold text-tertiary-fixed">09</span>
                 <span class="text-tertiary-fixed-dim material-symbols-outlined text-2xl">task_alt</span>
               </div>
               <p class="text-xs font-semibold text-on-primary-container mt-1">Successfully Implemented</p>
               <div class="absolute bottom-0 left-0 w-24 h-2 bg-tertiary-fixed-dim/20 -rotate-1"></div>
+            </div>
+          </div>
+          <div class="absolute -bottom-10 -right-10 opacity-10">
+            <svg fill="none" height="200" viewBox="0 0 200 200" width="200">      
+              <path d="M20 180C60 140 140 60 180 20" stroke="white" stroke-linecap="round" stroke-width="4"></path>        
+              <path d="M40 20C80 60 120 140 160 180" stroke="white" stroke-linecap="round" stroke-width="4"></path>        
+            </svg>
+          </div>
+        </div>
+
+        <div class="md:col-span-12 mt-2">
+          <div class="flex justify-between items-center mb-6">
+            <h3 class="text-xl font-bold text-primary">Recent Contributions</h3> 
+            <router-link class="text-primary text-sm font-semibold border-b-2 border-tertiary-fixed-dim hover:pb-1 transition-all" to="/my-submissions">View All Submissions</router-link>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">      
+            <div class="bg-surface-container p-5 rounded-lg border-2 border-primary flex flex-col justify-between group cursor-pointer hover:bg-surface-container-high transition-colors">
+              <div>
+                <div class="flex justify-between items-start mb-4">
+                  <span class="bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full text-xs font-bold">UX STRATEGY</span>
+                  <span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors text-[18px]">open_in_new</span>        
+                </div>
+                <h4 class="text-sm font-bold text-primary mb-2">Automated Artisan Feedback Loops</h4>
+                <p class="text-on-surface-variant text-sm leading-relaxed line-clamp-2">A proposal to integrate direct-to-studio messaging for real-time customer feedback.</p>
+              </div>
+              <div class="mt-5 flex items-center justify-between">
+                <span class="text-xs text-outline font-medium">Aug 12, 2023</span>
+                <span class="text-xs font-bold text-primary flex items-center gap-1">
+                  <span class="material-symbols-outlined text-sm">check_circle</span>
+                  IMPLEMENTED
+                </span>
+              </div>
+            </div>
+            
+            <div class="bg-surface-container p-5 rounded-lg border-2 border-primary flex flex-col justify-between group cursor-pointer hover:bg-surface-container-high transition-colors">
+              <div>
+                <div class="flex justify-between items-start mb-4">
+                  <span class="bg-tertiary-fixed-dim text-primary px-3 py-1 rounded-full text-xs font-bold">SUSTAINABILITY</span>
+                  <span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors text-[18px]">open_in_new</span>        
+                </div>
+                <h4 class="text-sm font-bold text-primary mb-2">Zero-Waste Packaging Initiative</h4>
+                <p class="text-on-surface-variant text-sm leading-relaxed line-clamp-2">Redesigning the standard shipping kit to use 100% recycled workshop shavings.</p>
+              </div>
+              <div class="mt-5 flex items-center justify-between">
+                <span class="text-xs text-outline font-medium">Sep 04, 2023</span>
+                <span class="text-xs font-bold text-secondary flex items-center gap-1">
+                  <span class="material-symbols-outlined text-sm">pending</span> 
+                  UNDER REVIEW
+                </span>
+              </div>
+            </div>
+            
+            <div class="bg-surface-container p-5 rounded-lg border-2 border-primary flex flex-col justify-between group cursor-pointer hover:bg-surface-container-high transition-colors">
+              <div>
+                <div class="flex justify-between items-start mb-4">
+                  <span class="bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full text-xs font-bold">LOGISTICS</span>
+                  <span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors text-[18px]">open_in_new</span>        
+                </div>
+                <h4 class="text-sm font-bold text-primary mb-2">Artisan Rotation Program</h4>
+                <p class="text-on-surface-variant text-sm leading-relaxed line-clamp-2">A scheme to allow office staff to spend 1 day a month in the physical studios.</p>
+              </div>
+              <div class="mt-5 flex items-center justify-between">
+                <span class="text-xs text-outline font-medium">Oct 19, 2023</span>
+                <span class="text-xs font-bold text-primary flex items-center gap-1">
+                  <span class="material-symbols-outlined text-sm">check_circle</span>
+                  IMPLEMENTED
+                </span>
+              </div>
             </div>
           </div>
         </div>

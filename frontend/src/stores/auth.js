@@ -40,9 +40,16 @@ export const useAuthStore = defineStore('auth', () => {
     if (profileData.field) formData.append('field', profileData.field);
     if (profileData.image) formData.append('image', profileData.image);
 
+    console.log("Checking Payload:", { imageInstance: profileData.image instanceof File, fileName: profileData.image?.name });
     const response = await axios.post('/api/v1/profile/update', formData);
-    user.value = response.data.user;
-    localStorage.setItem('user', JSON.stringify(response.data.user));
+    
+    const updatedUser = response.data.user;
+    if (updatedUser.profile_image_url) {
+      updatedUser.profile_image_url = updatedUser.profile_image_url + '?t=' + new Date().getTime();
+    }
+    user.value = updatedUser;
+    localStorage.setItem('user', JSON.stringify(updatedUser));
+    
     return response.data;
   }
 
