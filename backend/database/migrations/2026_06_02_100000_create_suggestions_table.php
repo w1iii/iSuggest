@@ -12,7 +12,7 @@ return new class extends Migration
             $table->foreignId('user_id')->index()->constrained()->cascadeOnDelete();
             $table->string('title');
             $table->text('description');
-            $table->enum('category', ['Workplace', 'Technology', 'Process Improvement', 'Employee Welfare']);
+            $table->enum('category', config('suggestions.categories'));
             $table->enum('status', ['Pending', 'Approved', 'Rejected', 'Implemented'])->default('Pending');
             $table->text('admin_remarks')->nullable();
             $table->timestamps();

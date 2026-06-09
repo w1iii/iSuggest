@@ -18,7 +18,6 @@ class SubmitController extends Controller
             'success' => true,
             'message' => 'Suggestion saved successfully.',
             'data'    => $suggestion,
-            'status'  => 200
-        ]);
+        ], 201);
     }
 }

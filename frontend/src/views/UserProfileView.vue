@@ -1,7 +1,8 @@
 <script setup>
-import { ref, reactive } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
+import axios from 'axios'
 import logo from '@/assets/logo.png'
 
 const router = useRouter()
@@ -10,6 +11,8 @@ const authStore = useAuthStore()
 const isEditing = ref(false)
 const isLoading = ref(false)
 const error = ref(null)
+const userStats = ref({ total: 0, implemented: 0 })
+const statsLoading = ref(true)
 
 const form = reactive({
   name: authStore.user?.name || '',
@@ -53,6 +56,16 @@ async function handleUpdateProfile() {
   }
 }
 
+async function fetchUserStats() {
+  try {
+    const res = await axios.get('/api/v1/suggestions/user-stats')
+    userStats.value = res.data
+  } catch {
+  } finally {
+    statsLoading.value = false
+  }
+}
+
 async function handleLogout() {
   try {
     await authStore.logout()
@@ -60,6 +73,8 @@ async function handleLogout() {
     router.push('/login')
   }
 }
+
+onMounted(fetchUserStats)
 </script>
 
 <template>
@@ -74,7 +89,17 @@ async function handleLogout() {
           <span class="material-symbols-outlined text-[20px]">view_kanban</span>
           <span>Kanban</span>
         </router-link>
-        <router-link class="flex items-center gap-2 p-2 rounded text-on-surface-variant hover:bg-surface-container hover:text-primary transition-colors text-sm font-medium active:scale-95" to="/admin/analytics">
+        <router-link 
+          class="flex items-center gap-2 p-2 rounded text-on-surface-variant hover:bg-surface-container hover:text-primary transition-colors text-sm font-medium active:scale-95" 
+          to="/admin/employees"
+        >
+          <span class="material-symbols-outlined text-[20px]">group</span>
+          <span>Employees</span>
+        </router-link>
+        <router-link 
+          class="flex items-center gap-2 p-2 rounded text-on-surface-variant hover:bg-surface-container hover:text-primary transition-colors text-sm font-medium active:scale-95" 
+          to="/admin/analytics"
+        >
           <span class="material-symbols-outlined text-[20px]">analytics</span>
           <span>Analytics</span>
         </router-link>
@@ -121,10 +146,15 @@ async function handleLogout() {
             <span class="material-symbols-outlined text-primary cursor-pointer text-[22px]">notifications</span>
             <router-link to="/profile">
               <img
+                v-if="authStore.user?.profile_image_url"
+                :src="authStore.user.profile_image_url"
                 alt="User Profile"
                 class="w-8 h-8 rounded-full border-2 border-primary object-cover cursor-pointer"
-                :src="authStore.user?.profile_image_url || 'https://lh3.googleusercontent.com/aida-public/AB6AXuDyqql2psZptharucfNZGIrPwIypbnj2OVC6lr429hrbn7jFXNp1Pz_Bn9u3-SgQwrjbJxB_Ck9MjasSZAWPmVQ87nQsNHnZvF4cNE-BVkr_-Q85yABCmC_9ihHLBf5gOFRrVqaFwAZDau9aB66YIMSQfENzKUydkTKA_VDrez1agbWRCFMDewA_wOMi1IilAHtEs1ODlVHDXi5OmCaTOrNx8BXl-HDoa4zrMfUihTkAEPX2k8CbIX_RYT9mHnHodNgeJ31iEWOdao'"
               />
+              <span
+                v-else
+                class="material-symbols-outlined text-primary cursor-pointer text-[28px]"
+              >account_circle</span>
             </router-link>
           </div>
         </div>
@@ -136,11 +166,22 @@ async function handleLogout() {
         <div class="flex flex-col md:flex-row gap-8 items-start md:items-end relative z-10">
           <div class="relative group">
             <div class="absolute -top-4 -left-4 w-40 h-40 bg-tertiary-fixed-dim/30 rounded-full blur-2xl group-hover:bg-tertiary-fixed-dim/50 transition-all"></div>
-            <img
-              :alt="authStore.user?.name"
-              class="w-36 h-36 md:w-48 md:h-48 rounded-lg border-2 border-primary object-cover relative z-10"
-              :src="authStore.user?.profile_image_url || 'https://lh3.googleusercontent.com/aida-public/AB6AXuBL3iWPRZZviRsIX-1wad6OKUAG-8Pg2zzn49UxO5arUGrFmuGEgXtXFfkm-jx_miOAColybQBav9oEbOb1swFd6tZdjg_nw-5H0FgmYBG51BOeIA-kr6w2r2TlR-zjqZFKrzYIhoj2kLYpuno-xIXlFJVK_uDgbSR9_AJjsO_bxyQehCBAP7cgeeOHJsfvsbBLSFhvUhbNuTWuQ5lmHhmCi1BU3-SA3Gilbz8GfIp_uGPMbOPBIe_C5Yj9QqgwyOEqSCLyeHgIce0'"
-            />
+            <div
+              v-if="authStore.user?.profile_image_url"
+              class="w-36 h-36 md:w-48 md:h-48 rounded-lg border-2 border-primary object-cover relative z-10 overflow-hidden"
+            >
+              <img
+                :src="authStore.user.profile_image_url"
+                :alt="authStore.user?.name"
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <div
+              v-else
+              class="w-36 h-36 md:w-48 md:h-48 rounded-lg border-2 border-primary relative z-10 bg-primary-container flex items-center justify-center"
+            >
+              <span class="material-symbols-outlined text-6xl text-primary">account_circle</span>
+            </div>
             <div class="absolute -bottom-2 -right-2 bg-tertiary-fixed text-primary px-4 py-1 rounded-full text-sm font-bold z-20 border-2 border-primary" v-if="authStore.user?.title">
               {{ authStore.user.title }}
             </div>
@@ -179,17 +220,21 @@ async function handleLogout() {
 
         <div class="md:col-span-4 bg-primary-container p-6 md:p-8 rounded-lg border-2 border-primary text-surface relative overflow-hidden">
           <h3 class="text-xs font-semibold uppercase tracking-widest text-on-primary-container mb-8">Personal Impact</h3>
-          <div class="space-y-8">
+          <div v-if="statsLoading" class="space-y-8">
+            <div class="h-16 bg-on-primary-container/10 rounded animate-pulse"></div>
+            <div class="h-16 bg-on-primary-container/10 rounded animate-pulse"></div>
+          </div>
+          <div v-else class="space-y-8">
             <div>
               <div class="flex items-baseline gap-2">
-                <span class="text-5xl font-extrabold text-tertiary-fixed">24</span>
+                <span class="text-5xl font-extrabold text-tertiary-fixed">{{ userStats.total }}</span>
                 <span class="text-tertiary-fixed-dim material-symbols-outlined text-2xl">auto_awesome</span>
               </div>
               <p class="text-xs font-semibold text-on-primary-container mt-1">Ideas Submitted</p>
             </div>
             <div class="relative">
               <div class="flex items-baseline gap-2">
-                <span class="text-5xl font-extrabold text-tertiary-fixed">09</span>
+                <span class="text-5xl font-extrabold text-tertiary-fixed">{{ userStats.implemented }}</span>
                 <span class="text-tertiary-fixed-dim material-symbols-outlined text-2xl">task_alt</span>
               </div>
               <p class="text-xs font-semibold text-on-primary-container mt-1">Successfully Implemented</p>

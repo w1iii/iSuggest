@@ -107,10 +107,15 @@ onMounted(fetchDashboardData)
             <span class="material-symbols-outlined text-primary cursor-pointer text-[22px]">notifications</span>
             <router-link to="/profile">
               <img
+                v-if="authStore.user?.profile_image_url"
+                :src="authStore.user.profile_image_url"
                 alt="User Profile"
                 class="w-8 h-8 rounded-full border-2 border-primary object-cover cursor-pointer"
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDyqql2psZptharucfNZGIrPwIypbnj2OVC6lr429hrbn7jFXNp1Pz_Bn9u3-SgQwrjbJxB_Ck9MjasSZAWPmVQ87nQsNHnZvF4cNE-BVkr_-Q85yABCmC_9ihHLBf5gOFRrVqaFwAZDau9aB66YIMSQfENzKUydkTKA_VDrez1agbWRCFMDewA_wOMi1IilAHtEs1ODlVHDXi5OmCaTOrNx8BXl-HDoa4zrMfUihTkAEPX2k8CbIX_RYT9mHnHodNgeJ31iEWOdao"
               />
+              <span
+                v-else
+                class="material-symbols-outlined text-primary cursor-pointer text-[28px]"
+              >account_circle</span>
             </router-link>
           </div>
         </div>
@@ -201,15 +206,13 @@ onMounted(fetchDashboardData)
           <!-- Why Your Idea Matters -->
           <div class="relative p-3 rounded-lg border-2 border-primary bg-secondary-container/30">
             <div class="flex gap-3 items-start">
-              <img
-                alt="Human centric creative concept"
-                class="w-16 h-16 shrink-0 object-cover rounded-lg border-2 border-primary mix-blend-multiply opacity-80"
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuB7kUUsOWyUg1-whmc5gQV8ovjh0B7MhqqXwgrX37dS0LNT33iMd9M3S6gRB55bgHVQDymsolO6-0vHBDVI_B-uAD7rh20R9xETkeGdQkh-4x-UYzFbEeykZ2dlJQ0KUH0aEMnHdnp3EqOL8eAM_l8UGcwge_To_fpomogtuXyKQY0T8MFGmv2HCacQ23UXV7WnwR8j2APiNRDALOjj3mhsTh711ZLUQDg3xjq0weC2hWW0TwtBTJUJ_KGDYuuYnuaOpZSe7EDhLio"
-              />
+              <div class="w-16 h-16 shrink-0 rounded-lg border-2 border-primary bg-gradient-to-br from-primary-container to-secondary-container flex items-center justify-center">
+                <span class="material-symbols-outlined text-2xl text-primary opacity-60">lightbulb</span>
+              </div>
               <div class="min-w-0">
                 <h3 class="text-xs font-bold text-primary mb-1 scribble-circle inline-block">Why your idea matters</h3>
                 <p class="text-xs text-on-secondary-container leading-relaxed">
-                  At <span class="font-bold">InnovationHub</span>, we believe that the most powerful solutions come from the people who live the experience every day. Your perspective is the craftsmanship behind our progress.
+                  At <span class="font-bold">iSuggest</span>, we believe that the most powerful solutions come from the people who live the experience every day. Your perspective is the craftsmanship behind our progress.
                 </p>
               </div>
             </div>

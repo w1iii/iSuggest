@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import axios from 'axios'
 
 const props = defineProps({
@@ -19,7 +19,18 @@ const editingRemarks = ref(false)
 const remarks = ref(props.suggestion?.admin_remarks || '')
 const newStatus = ref(props.suggestion?.status || '')
 
-const statusOptions = ['Pending', 'In Review', 'Approved', 'Rejected', 'Implemented']
+const statusOptions = ref([])
+
+watch(() => props.modelValue, async (open) => {
+  if (open) {
+    try {
+      const res = await axios.get('/api/v1/admin/suggestions/statuses')
+      statusOptions.value = res.data.statuses
+    } catch (e) {
+      console.error('Failed to load statuses', e)
+    }
+  }
+})
 
 const statusColors = {
   Pending: 'bg-secondary-container text-on-secondary-container',
@@ -28,6 +39,8 @@ const statusColors = {
   Rejected: 'bg-error text-on-error',
   Implemented: 'bg-tertiary-fixed-dim text-on-tertiary-fixed',
 }
+
+const statusColor = (status) => statusColors[status] || 'bg-surface-container-high text-on-surface'
 
 const formatDate = (date) => {
   return new Date(date).toLocaleDateString('en-US', {
@@ -132,7 +145,7 @@ const closeModal = () => {
           <!-- Status -->
           <div>
             <h3 class="font-label-md text-label-md text-secondary mb-2">Status</h3>
-            <span :class="statusColors[suggestion.status]" class="inline-block font-label-md text-xs px-3 py-1 rounded-full uppercase tracking-tighter">
+            <span :class="statusColor(suggestion.status)" class="inline-block font-label-md text-xs px-3 py-1 rounded-full uppercase tracking-tighter">
               {{ suggestion.status }}
             </span>
           </div>
@@ -223,7 +236,7 @@ const closeModal = () => {
               @click="handleStatusChange(status)"
               :disabled="loading || status === suggestion.status"
               :class="[
-                statusColors[status],
+                statusColor(status),
                 status === suggestion.status ? 'ring-2 ring-offset-2 ring-primary' : '',
                 'px-3 py-2 rounded-lg font-label-md text-xs uppercase tracking-tighter transition-all disabled:opacity-50 cursor-pointer hover:scale-105'
               ]"

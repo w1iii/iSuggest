@@ -174,7 +174,7 @@ watch(() => statusFilter.value, () => fetchEmployees())
                   </div>
                 </td>
                 <td class="p-4 text-sm text-secondary">{{ emp.email }}</td>
-                <td class="p-4 text-sm text-secondary">{{ emp.Title || '-' }}</td>
+                <td class="p-4 text-sm text-secondary">{{ emp.title || '-' }}</td>
                 <td class="p-4">
                   <span
                     class="inline-flex items-center gap-1 px-3 py-0.5 rounded-full text-xs font-semibold border"

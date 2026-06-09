@@ -16,7 +16,7 @@ class StoreSuggestionRequest extends FormRequest
         return [
             'title' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string'],
-            'category' => ['required', 'string', 'max:255'],
+            'category' => ['required', 'string', 'in:' . implode(',', config('suggestions.categories'))],
         ];
     }
 }

@@ -102,10 +102,15 @@ async function handleLogout() {
             <span class="material-symbols-outlined text-primary cursor-pointer text-[22px]">notifications</span>
             <router-link to="/profile">
               <img
+                v-if="authStore.user?.profile_image_url"
+                :src="authStore.user.profile_image_url"
                 alt="User Profile"
                 class="w-8 h-8 rounded-full border-2 border-primary object-cover cursor-pointer"
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDyqql2psZptharucfNZGIrPwIypbnj2OVC6lr429hrbn7jFXNp1Pz_Bn9u3-SgQwrjbJxB_Ck9MjasSZAWPmVQ87nQsNHnZvF4cNE-BVkr_-Q85yABCmC_9ihHLBf5gOFRrVqaFwAZDau9aB66YIMSQfENzKUydkTKA_VDrez1agbWRCFMDewA_wOMi1IilAHtEs1ODlVHDXi5OmCaTOrNx8BXl-HDoa4zrMfUihTkAEPX2k8CbIX_RYT9mHnHodNgeJ31iEWOdao"
               />
+              <span
+                v-else
+                class="material-symbols-outlined text-primary cursor-pointer text-[28px]"
+              >account_circle</span>
             </router-link>
           </div>
         </div>

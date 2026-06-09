@@ -89,7 +89,7 @@ async function downloadReport() {
       <!-- Hero Header with Hand-Drawn Style -->
       <section class="relative overflow-hidden rounded-xl bg-surface-container-low border-2 border-primary mb-8 p-6 md:p-8 flex flex-col items-center justify-center text-center min-h-[300px]">
         <div class="absolute inset-0 z-0 opacity-20 pointer-events-none overflow-hidden">
-          <img class="w-full h-full object-cover grayscale" alt="Stylized minimalist illustration background featuring clean hand-drawn line art depicting messy creative thoughts, tangled strings, and artistic chaos. Lo-fi handcrafted style using monochromatic deep green and cream color palette." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCvtyhZA1VoiqunkK4gc_52je6iF8eM0cfOjPYI2Z7mZXtTKV8_KEF3P4kC20fNJe_-KhX025J3BqTNGFIHweNk-yKBkAtaOWnNZYzLR9-AeLpcS3azzI0oNUFwo2fCL4EGdA-kE6CfZl6e3anx2ODI9RF-F3V4zo9r6TIA4sakINVvTSnWkhz7pPwPoG7yB9SEWgQM_vf7fzb3O0OqdU-yt4I1Xnlkn15Kw_JkGAAZ9X9_3O0dci6f5EpG7Cju0lmxdwCoJhtN-nY" />
+          <div class="w-full h-full bg-gradient-to-br from-primary-container/40 via-secondary-container/20 to-surface-container-high"></div>
         </div>
         <!-- Scribble Accents -->
         <svg class="scribble-accent top-10 left-10 w-24 h-24 text-secondary-fixed-dim opacity-50 absolute" viewBox="0 0 100 100">
