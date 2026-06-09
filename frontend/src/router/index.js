@@ -53,15 +53,14 @@ const router = createRouter({
   ],
 })
 
-router.beforeEach((to, from, next) => {
+router.beforeEach((to, from) => {
   const authStore = useAuthStore()
   if (to.meta.requiresAuth && !authStore.token) {
-    next('/login')
+    return '/login'
   } else if (to.meta.requiresAdmin && !authStore.isAdmin) {
-    next('/dashboard')
-  } else {
-    next()
+    return '/dashboard'
   }
+  // Allow navigation (return nothing = true)
 })
 
 export default router
