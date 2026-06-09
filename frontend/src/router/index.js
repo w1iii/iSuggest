@@ -59,14 +59,19 @@ const router = createRouter({
   ],
 })
 
-router.beforeEach((to, from) => {
+router.beforeEach(async (to, from) => {
   const authStore = useAuthStore()
-  if (to.meta.requiresAuth && !authStore.token) {
-    return '/login'
-  } else if (to.meta.requiresAdmin && !authStore.isAdmin) {
+  if (to.meta.requiresAuth && !authStore.isAuthenticated) {
+    if (authStore.loading) {
+      await authStore.init()
+    }
+    if (!authStore.isAuthenticated) {
+      return '/login'
+    }
+  }
+  if (to.meta.requiresAdmin && !authStore.isAdmin) {
     return '/dashboard'
   }
-  // Allow navigation (return nothing = true)
 })
 
 export default router

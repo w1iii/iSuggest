@@ -39,16 +39,15 @@ class EmployeeController extends Controller
     public function store(StoreEmployeeRequest $request): JsonResponse
     {
         $validated = $request->validated();
-        $plainPassword = $validated['password'];
 
         $user = User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
-            'password' => Hash::make($plainPassword),
+            'password' => Hash::make($validated['password']),
             'role' => 'Employee',
         ]);
 
-        Mail::to($user)->send(new WelcomeEmployee($user, $plainPassword));
+        Mail::to($user)->send(new WelcomeEmployee($user));
 
         return response()->json([
             'success' => true,

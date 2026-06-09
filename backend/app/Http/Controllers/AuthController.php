@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 
@@ -10,14 +11,12 @@ class AuthController extends Controller
 {
     public function register(Request $request)
     {
-        // Validate incoming request data
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
 
-        // Create new user with hashed password
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -25,9 +24,12 @@ class AuthController extends Controller
             'role' => 'Employee',
         ]);
 
-        // Return 201 Created response with success message and user data
+        $token = $user->createToken('auth_token')->plainTextToken;
+        Auth::guard('web')->login($user);
+
         return response()->json([
-            'message' => 'Account created successfully',
+            'access_token' => $token,
+            'token_type' => 'Bearer',
             'user' => $user,
         ], 201);
     }
@@ -68,6 +70,7 @@ class AuthController extends Controller
         }
 
         $token = $user->createToken('auth_token')->plainTextToken;
+        Auth::guard('web')->login($user);
 
         return response()->json([
             'access_token' => $token,
@@ -78,7 +81,16 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
-        $request->user()->currentAccessToken()->delete();
+        if ($request->user()) {
+            $request->user()->currentAccessToken()?->delete();
+        }
+
+        Auth::guard('web')->logout();
+
+        if ($request->hasSession()) {
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+        }
 
         return response()->json(['message' => 'Logged out successfully']);
     }

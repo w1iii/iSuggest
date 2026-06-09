@@ -23,17 +23,10 @@
 
         <div class="card">
             <h2 style="margin-top: 0;">Welcome, {{ $user->name }}!</h2>
-            <p>Your employee account has been created. Use the credentials below to sign in.</p>
+            <p>Your employee account has been created. You can sign in using the credentials provided by your administrator.</p>
 
             <div class="label">Email</div>
             <div class="value">{{ $user->email }}</div>
-
-            <div class="label">Temporary Password</div>
-            <div class="value">{{ $password }}</div>
-
-            <p style="font-size: 14px; color: #64748b;">
-                Please change your password after logging in.
-            </p>
 
             <div style="text-align: center; margin-top: 24px;">
                 <a href="{{ config('app.frontend_url') }}" class="btn">Sign In to iSuggest</a>

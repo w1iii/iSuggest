@@ -20,7 +20,7 @@ class AuthTest extends TestCase
         ]);
 
         $response->assertStatus(201)
-            ->assertJson(['message' => 'Account created successfully']);
+            ->assertJsonStructure(['access_token', 'token_type', 'user']);
 
         $this->assertDatabaseHas('users', [
             'email' => 'test@example.com',
