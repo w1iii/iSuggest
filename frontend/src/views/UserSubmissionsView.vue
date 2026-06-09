@@ -1,11 +1,12 @@
 <script setup>
 import { ref, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import axios from 'axios'
 import logo from '@/assets/logo.png'
 
 const router = useRouter()
+const route = useRoute()
 const authStore = useAuthStore()
 
 const submissions = ref([])
@@ -17,6 +18,10 @@ const statusMap = {
   Approved: { label: 'Approved', class: 'bg-tertiary-fixed text-primary' },
   Rejected: { label: 'Declined', class: 'bg-error-container text-on-error-container' },
   Implemented: { label: 'Implemented', class: 'bg-surface-container-high text-on-surface-variant' },
+}
+
+function isActive(path) {
+  return route.path === path
 }
 
 function formatDate(dateStr) {
@@ -52,7 +57,7 @@ onMounted(fetchData)
 
 <template>
   <div class="bg-surface text-on-surface font-body-md min-h-screen">
-    <!-- Sidebar -->
+    <!-- Sidebar (Desktop) -->
     <nav class="fixed left-0 top-20 h-[calc(100vh-80px)] flex flex-col p-4 border-r-2 border-primary bg-background hidden md:flex w-[200px] z-20">
       <div class="flex flex-col gap-1 flex-grow">
         <router-link class="flex items-center gap-2 p-2 rounded text-on-surface-variant hover:bg-surface-container hover:text-primary transition-colors text-sm font-medium active:scale-95" to="/dashboard">
@@ -75,10 +80,12 @@ onMounted(fetchData)
     <!-- Top Nav -->
     <header class="w-full top-0 sticky z-30 bg-background border-b-2 border-primary">
       <nav class="flex justify-between items-center h-20 px-gutter max-w-page mx-auto">
-        <router-link to="/dashboard" class="flex items-center gap-3">
-          <img :src="logo" alt="iSuggest Logo" class="w-10 h-10 object-contain" />
-          <span class="font-headline-md text-headline-md font-bold text-primary">iSuggest</span>
-        </router-link>
+        <div class="flex items-center gap-2">
+          <router-link to="/dashboard" class="flex items-center gap-3">
+            <img :src="logo" alt="iSuggest Logo" class="w-10 h-10 object-contain" />
+            <span class="font-headline-md text-headline-md font-bold text-primary hidden sm:inline">iSuggest</span>
+          </router-link>
+        </div>
         <div class="flex items-center gap-4">
           <div class="hidden lg:flex items-center gap-3">
             <a class="text-sm text-secondary hover:text-tertiary-container transition-all" href="#">Settings</a>
@@ -98,13 +105,19 @@ onMounted(fetchData)
                 class="material-symbols-outlined text-primary cursor-pointer text-[28px]"
               >account_circle</span>
             </router-link>
+            <div class="hidden max-md:flex items-center">
+              <button
+                class="material-symbols-outlined text-primary cursor-pointer text-[22px]"
+                @click="handleLogout"
+              >logout</button>
+            </div>
           </div>
         </div>
       </nav>
     </header>
 
     <!-- Main Content -->
-    <main class="md:ml-[232px] md:mr-[32px] min-h-[calc(100vh-80px)] p-4 md:p-6 max-w-page mx-auto">
+    <main class="md:ml-[232px] md:mr-[32px] min-h-[calc(100vh-80px)] p-4 md:p-6 max-w-page mx-auto pb-20 md:pb-6">
       <!-- Page Header -->
       <div class="mb-6">
         <div class="flex items-center justify-between mb-4">
@@ -150,7 +163,36 @@ onMounted(fetchData)
 
       <!-- Submissions List / Table -->
       <div v-else class="bg-surface-container-lowest border-2 border-primary rounded-lg overflow-hidden">
-        <div class="overflow-x-auto">
+        <!-- Mobile Cards -->
+        <div class="md:hidden divide-y divide-outline-variant">
+          <div
+            v-for="sub in submissions"
+            :key="sub.id"
+            class="p-4 space-y-2 hover:bg-surface-container-low transition-colors"
+          >
+            <div class="flex items-start justify-between gap-2">
+              <div class="flex-1 min-w-0">
+                <p class="text-sm font-bold text-primary truncate">{{ sub.title }}</p>
+                <p class="text-xs text-secondary">{{ sub.category }}</p>
+              </div>
+              <span
+                class="px-3 py-0.5 rounded-full text-[10px] font-semibold border border-primary shrink-0"
+                :class="statusMap[sub.status]?.class || 'bg-surface-container-high text-on-surface-variant'"
+              >
+                {{ statusMap[sub.status]?.label || sub.status }}
+              </span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="text-xs text-secondary">{{ formatDate(sub.created_at) }}</span>
+              <a class="inline-flex items-center gap-1 text-primary text-xs font-semibold" href="#">
+                View Details
+                <span class="material-symbols-outlined text-xs">arrow_forward</span>
+              </a>
+            </div>
+          </div>
+        </div>
+        <!-- Desktop Table -->
+        <div class="hidden md:block overflow-x-auto">
           <table class="w-full text-left border-collapse">
             <thead>
               <tr class="bg-surface-container-high border-b-2 border-primary">
@@ -184,7 +226,7 @@ onMounted(fetchData)
             </tbody>
           </table>
         </div>
-        <div class="p-6 flex items-center justify-between border-t-2 border-primary bg-surface-container-low">
+        <div class="p-6 flex flex-col sm:flex-row items-center justify-between gap-3 border-t-2 border-primary bg-surface-container-low">
           <span class="text-sm font-semibold text-secondary">Showing 1-{{ submissions.length }} of {{ stats.total }} submissions</span>
           <div class="flex gap-2">
             <button class="h-10 w-10 border-2 border-primary rounded-full flex items-center justify-center hover:bg-tertiary-fixed transition-colors disabled:opacity-50" disabled>
@@ -215,19 +257,27 @@ onMounted(fetchData)
 
     <!-- Mobile Bottom Nav -->
     <nav class="md:hidden fixed bottom-0 left-0 w-full bg-surface border-t-2 border-primary flex justify-around items-center py-3 z-50">
-      <router-link class="flex flex-col items-center gap-1 text-secondary" to="/dashboard">
+      <router-link
+        class="flex flex-col items-center gap-1"
+        :class="isActive('/dashboard') ? 'text-primary font-bold' : 'text-secondary'"
+        to="/dashboard"
+      >
         <span class="material-symbols-outlined">dashboard</span>
         <span class="text-[10px] font-label-md">Home</span>
       </router-link>
-      <router-link class="flex flex-col items-center gap-1 text-secondary" to="/dashboard">
-        <span class="material-symbols-outlined">lightbulb</span>
-        <span class="text-[10px] font-label-md">Suggest</span>
-      </router-link>
-      <router-link class="flex flex-col items-center gap-1 text-primary font-bold" to="/my-submissions">
+      <router-link
+        class="flex flex-col items-center gap-1"
+        :class="isActive('/my-submissions') ? 'text-primary font-bold' : 'text-secondary'"
+        to="/my-submissions"
+      >
         <span class="material-symbols-outlined">list_alt</span>
         <span class="text-[10px] font-label-md">My Ideas</span>
       </router-link>
-      <router-link class="flex flex-col items-center gap-1 text-secondary" to="/profile">
+      <router-link
+        class="flex flex-col items-center gap-1"
+        :class="isActive('/profile') ? 'text-primary font-bold' : 'text-secondary'"
+        to="/profile"
+      >
         <span class="material-symbols-outlined">person</span>
         <span class="text-[10px] font-label-md">Profile</span>
       </router-link>

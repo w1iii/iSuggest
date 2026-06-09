@@ -1,11 +1,12 @@
 <script setup>
 import { ref, reactive, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import axios from 'axios'
 import logo from '@/assets/logo.png'
 
 const router = useRouter()
+const route = useRoute()
 const authStore = useAuthStore()
 
 const isEditing = ref(false)
@@ -64,6 +65,10 @@ async function fetchUserStats() {
   } finally {
     statsLoading.value = false
   }
+}
+
+function isActive(path) {
+  return route.path === path
 }
 
 async function handleLogout() {
@@ -133,10 +138,12 @@ onMounted(fetchUserStats)
 
     <header class="w-full top-0 sticky z-30 bg-background border-b-2 border-primary">
       <nav class="flex justify-between items-center h-20 px-gutter max-w-page mx-auto">
-        <router-link :to="authStore.isAdmin ? '/admin/dashboard' : '/dashboard'" class="flex items-center gap-3">
-          <img :src="logo" alt="iSuggest Logo" class="w-10 h-10 object-contain" />
-          <span class="font-headline-md text-headline-md font-bold text-primary">iSuggest</span>
-        </router-link>
+        <div class="flex items-center gap-2">
+          <router-link :to="authStore.isAdmin ? '/admin/dashboard' : '/dashboard'" class="flex items-center gap-3">
+            <img :src="logo" alt="iSuggest Logo" class="w-10 h-10 object-contain" />
+            <span class="font-headline-md text-headline-md font-bold text-primary hidden sm:inline">iSuggest</span>
+          </router-link>
+        </div>
         <div class="flex items-center gap-4">
           <div class="hidden lg:flex items-center gap-3">
             <a class="text-sm text-secondary hover:text-tertiary-container transition-all" href="#">Settings</a>
@@ -156,12 +163,18 @@ onMounted(fetchUserStats)
                 class="material-symbols-outlined text-primary cursor-pointer text-[28px]"
               >account_circle</span>
             </router-link>
+            <div class="hidden max-md:flex items-center">
+              <button
+                class="material-symbols-outlined text-primary cursor-pointer text-[22px]"
+                @click="handleLogout"
+              >logout</button>
+            </div>
           </div>
         </div>
       </nav>
     </header>
 
-    <main :class="authStore.isAdmin ? 'md:ml-[232px]' : 'md:ml-[232px] md:mr-[32px]'" class="min-h-[calc(100vh-80px)] p-4 md:p-6 max-w-page mx-auto">
+    <main :class="authStore.isAdmin ? 'md:ml-[232px]' : 'md:ml-[232px] md:mr-[32px]'" class="min-h-[calc(100vh-80px)] p-4 md:p-6 max-w-page mx-auto pb-20 md:pb-6">
       <section class="mb-12 pt-8 relative">
         <div class="flex flex-col md:flex-row gap-8 items-start md:items-end relative z-10">
           <div class="relative group">
@@ -306,23 +319,77 @@ onMounted(fetchUserStats)
       </div>
     </main>
 
-    <nav class="md:hidden fixed bottom-0 left-0 w-full bg-surface border-t-2 border-primary flex justify-around items-center py-3 z-50">
-      <router-link :class="authStore.isAdmin ? 'flex flex-col items-center gap-1 text-secondary' : 'flex flex-col items-center gap-1 text-secondary'" :to="authStore.isAdmin ? '/admin/dashboard' : '/dashboard'">
-        <span class="material-symbols-outlined">dashboard</span>
-        <span class="text-[10px] font-label-md">Home</span>
-      </router-link>
-      <router-link class="flex flex-col items-center gap-1 text-secondary" :to="authStore.isAdmin ? '/admin/dashboard' : '/dashboard'">
-        <span class="material-symbols-outlined">{{ authStore.isAdmin ? 'view_kanban' : 'lightbulb' }}</span>
-        <span class="text-[10px] font-label-md">{{ authStore.isAdmin ? 'Kanban' : 'Suggest' }}</span>
-      </router-link>
-      <router-link class="flex flex-col items-center gap-1 text-secondary" :to="authStore.isAdmin ? '/admin/analytics' : '/my-submissions'">
-        <span class="material-symbols-outlined">{{ authStore.isAdmin ? 'analytics' : 'list_alt' }}</span>
-        <span class="text-[10px] font-label-md">{{ authStore.isAdmin ? 'Analytics' : 'My Ideas' }}</span>
-      </router-link>
-      <router-link class="flex flex-col items-center gap-1 text-primary font-bold" to="/profile">
-        <span class="material-symbols-outlined">person</span>
-        <span class="text-[10px] font-label-md">Profile</span>
-      </router-link>
-    </nav>
+    <template v-if="authStore.isAdmin">
+      <nav class="md:hidden fixed bottom-0 left-0 w-full bg-surface border-t-2 border-primary flex justify-around items-center py-3 z-50">
+        <router-link
+          class="flex flex-col items-center gap-1"
+          :class="isActive('/admin/dashboard') ? 'text-primary font-bold' : 'text-secondary'"
+          to="/admin/dashboard"
+        >
+          <span class="material-symbols-outlined">dashboard</span>
+          <span class="text-[10px] font-label-md">Home</span>
+        </router-link>
+        <router-link
+          class="flex flex-col items-center gap-1"
+          :class="isActive('/admin/suggestions') ? 'text-primary font-bold' : 'text-secondary'"
+          to="/admin/suggestions"
+        >
+          <span class="material-symbols-outlined">view_kanban</span>
+          <span class="text-[10px] font-label-md">Kanban</span>
+        </router-link>
+        <router-link
+          class="flex flex-col items-center gap-1"
+          :class="isActive('/admin/employees') ? 'text-primary font-bold' : 'text-secondary'"
+          to="/admin/employees"
+        >
+          <span class="material-symbols-outlined">group</span>
+          <span class="text-[10px] font-label-md">People</span>
+        </router-link>
+        <router-link
+          class="flex flex-col items-center gap-1"
+          :class="isActive('/admin/analytics') ? 'text-primary font-bold' : 'text-secondary'"
+          to="/admin/analytics"
+        >
+          <span class="material-symbols-outlined">analytics</span>
+          <span class="text-[10px] font-label-md">Insights</span>
+        </router-link>
+        <router-link
+          class="flex flex-col items-center gap-1"
+          :class="isActive('/profile') ? 'text-primary font-bold' : 'text-secondary'"
+          to="/profile"
+        >
+          <span class="material-symbols-outlined">person</span>
+          <span class="text-[10px] font-label-md">Profile</span>
+        </router-link>
+      </nav>
+    </template>
+    <template v-else>
+      <nav class="md:hidden fixed bottom-0 left-0 w-full bg-surface border-t-2 border-primary flex justify-around items-center py-3 z-50">
+        <router-link
+          class="flex flex-col items-center gap-1"
+          :class="isActive('/dashboard') ? 'text-primary font-bold' : 'text-secondary'"
+          to="/dashboard"
+        >
+          <span class="material-symbols-outlined">dashboard</span>
+          <span class="text-[10px] font-label-md">Home</span>
+        </router-link>
+        <router-link
+          class="flex flex-col items-center gap-1"
+          :class="isActive('/my-submissions') ? 'text-primary font-bold' : 'text-secondary'"
+          to="/my-submissions"
+        >
+          <span class="material-symbols-outlined">list_alt</span>
+          <span class="text-[10px] font-label-md">My Ideas</span>
+        </router-link>
+        <router-link
+          class="flex flex-col items-center gap-1"
+          :class="isActive('/profile') ? 'text-primary font-bold' : 'text-secondary'"
+          to="/profile"
+        >
+          <span class="material-symbols-outlined">person</span>
+          <span class="text-[10px] font-label-md">Profile</span>
+        </router-link>
+      </nav>
+    </template>
   </div>
 </template>

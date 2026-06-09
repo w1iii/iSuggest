@@ -99,9 +99,11 @@ onMounted(() => {
           </div>
           <div class="lg:col-span-5 relative">
             <div class="relative w-full aspect-square bg-surface-container-high rounded overflow-hidden border-2 border-primary rotate-2 hover:rotate-0 transition-transform duration-500">
-              <div class="w-full h-full bg-gradient-to-br from-primary-container to-secondary-container flex items-center justify-center">
-                <span class="material-symbols-outlined text-8xl text-primary opacity-30" style="font-variation-settings: 'FILL' 1;">lightbulb</span>
-              </div>
+              <img
+                alt="Innovation process"
+                class="w-full h-full object-cover"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDkfAHVHYaws3hohlApj_klTsXcMdNiHlDTsoW096uYpbYWUvlxIEn0lB3ylPSKxXtU4vFH_m4T-gyEu0Vzu8LXE9jvKdwuhhQ2xzB0NOkZyg5p3FQIXrj4SOMeJnfA0vC_zaCKxtVThkNozy71eUagYGeb1QOAjCVTwFH5huEeEiNdsbzZAzjaUV__wC-6bgT1HKbpfdkE7cAZrmbdidM2ojENSuBsmMiOutxV3XKwwHZPcj9DFZ9SIjEmXwbaBCX3kyEHb1gO19o"
+              />
             </div>
             <div class="absolute -top-12 -right-12 w-32 h-32 opacity-20 pointer-events-none">
               <svg class="w-full h-full text-primary" viewBox="0 0 100 100">
@@ -179,9 +181,11 @@ onMounted(() => {
               <p class="mt-4 text-primary-fixed-dim text-body-md">On projects graduating from Hub to production.</p>
             </div>
             <div class="md:col-span-4 aspect-square rounded border-2 border-primary overflow-hidden">
-              <div class="w-full h-full bg-gradient-to-br from-secondary-container to-tertiary-fixed-dim flex items-center justify-center grayscale hover:grayscale-0 transition-all duration-700">
-                <span class="material-symbols-outlined text-7xl text-primary opacity-30" style="font-variation-settings: 'FILL' 1;">groups</span>
-              </div>
+              <img
+                class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"
+                alt="Professionals collaborating"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBaKY1zgBmX45a5mYwiAwAi6CFiEzH8OKAnaexRyncXd86TkBBtuR1_KYbzDfjN-IWGYJtblPlhNiU-947u2aYHR9zgAsaba4JB9IYZ8HmoQSzKUmDCsLJPOyGeIxxsYKvfqgYMxZNtGDrDUpcKF0fzvwkMjbKtlM3-gTYgby_VG2LPLunYIru7SPefhdbBqHI7Jql0YdcS8FnfH0pEdeIF6xWebclgsEMpx0ItJGEQ2nZ6mJIdf5cNDE3i-EGrFgOECB5ncnO0ACk"
+              />
             </div>
             <div class="md:col-span-8 bg-tertiary-fixed border-2 border-primary rounded p-8 flex items-center justify-between">
               <div>
@@ -204,11 +208,11 @@ onMounted(() => {
           <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
             <div class="relative">
               <div class="w-full aspect-square bg-surface-container-high rounded overflow-hidden border-2 border-primary -rotate-1 hover:rotate-0 transition-transform duration-500">
-                <img
-                  alt="Team collaboration"
-                  class="w-full h-full object-cover"
-                  src="https://images.pexels.com/photos/3183183/pexels-photo-3183183.jpeg"
-                />
+                  <img
+                    alt="Team collaboration"
+                    class="w-full h-full object-cover"
+                    src="https://images.pexels.com/photos/3183183/pexels-photo-3183183.jpeg"
+                  />
               </div>
               <div class="absolute -bottom-6 -right-6 w-32 h-32 bg-primary/10 rounded-full blur-2xl pointer-events-none"></div>
             </div>

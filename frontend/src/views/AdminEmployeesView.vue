@@ -152,7 +152,45 @@ watch(() => statusFilter.value, () => fetchEmployees())
 
       <!-- Table -->
       <div v-else class="bg-surface-container-lowest border-2 border-primary rounded-lg overflow-hidden">
-        <div class="overflow-x-auto">
+        <!-- Mobile Cards -->
+        <div class="md:hidden divide-y divide-outline-variant">
+          <div
+            v-for="emp in employees"
+            :key="emp.id"
+            class="p-4 space-y-2 hover:bg-surface-container-low transition-colors"
+          >
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <div class="w-8 h-8 rounded-full border-2 border-primary bg-secondary-container flex items-center justify-center text-xs font-bold text-on-secondary-container shrink-0">
+                  {{ emp.name?.charAt(0) || '?' }}
+                </div>
+                <span class="text-sm font-bold text-primary">{{ emp.name }}</span>
+              </div>
+              <span
+                class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-semibold border shrink-0"
+                :class="emp.status === 'active'
+                  ? 'bg-tertiary-fixed text-primary border-primary'
+                  : 'bg-error-container text-on-error-container border-error'"
+              >
+                <span class="w-1.5 h-1.5 rounded-full" :class="emp.status === 'active' ? 'bg-primary' : 'bg-on-error-container'"></span>
+                {{ emp.status === 'active' ? 'Active' : 'Inactive' }}
+              </span>
+            </div>
+            <div class="grid grid-cols-2 gap-2 text-xs text-secondary">
+              <div>
+                <span class="font-semibold text-on-surface-variant">Email:</span> {{ emp.email }}
+              </div>
+              <div>
+                <span class="font-semibold text-on-surface-variant">Title:</span> {{ emp.title || '-' }}
+              </div>
+              <div>
+                <span class="font-semibold text-on-surface-variant">Joined:</span> {{ formatDate(emp.created_at) }}
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Desktop Table -->
+        <div class="hidden md:block overflow-x-auto">
           <table class="w-full text-left border-collapse">
             <thead>
               <tr class="bg-surface-container-high border-b-2 border-primary">

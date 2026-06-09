@@ -1,5 +1,5 @@
 <script setup>
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import logo from '@/assets/logo.png'
@@ -89,10 +89,12 @@ async function handleLogout() {
     <!-- Top Nav -->
     <header class="w-full top-0 sticky z-30 bg-background border-b-2 border-primary">
       <nav class="flex justify-between items-center h-20 px-gutter max-w-page mx-auto">
-        <router-link to="/admin/dashboard" class="flex items-center gap-3">
-          <img :src="logo" alt="iSuggest Logo" class="w-10 h-10 object-contain" />
-          <span class="font-headline-md text-headline-md font-bold text-primary">iSuggest</span>
-        </router-link>
+        <div class="flex items-center gap-2">
+          <router-link to="/admin/dashboard" class="flex items-center gap-3">
+            <img :src="logo" alt="iSuggest Logo" class="w-10 h-10 object-contain" />
+            <span class="font-headline-md text-headline-md font-bold text-primary hidden sm:inline">iSuggest</span>
+          </router-link>
+        </div>
         <div class="flex items-center gap-4">
           <div class="hidden lg:flex items-center gap-3">
             <a class="text-sm text-secondary hover:text-tertiary-container transition-all" href="#">Settings</a>
@@ -112,14 +114,64 @@ async function handleLogout() {
                 class="material-symbols-outlined text-primary cursor-pointer text-[28px]"
               >account_circle</span>
             </router-link>
+            <div class="hidden max-md:flex items-center">
+              <button
+                class="material-symbols-outlined text-primary cursor-pointer text-[22px]"
+                @click="handleLogout"
+              >logout</button>
+            </div>
           </div>
         </div>
       </nav>
     </header>
 
     <!-- Main Content Slot -->
-    <main class="md:ml-[232px] md:mr-[32px] min-h-[calc(100vh-80px)] p-4 md:p-6 max-w-page mx-auto">
+    <main class="md:ml-[232px] md:mr-[32px] min-h-[calc(100vh-80px)] p-4 md:p-6 max-w-page mx-auto pb-20 md:pb-6">
       <slot />
     </main>
+
+    <!-- Mobile Bottom Nav -->
+    <nav class="md:hidden fixed bottom-0 left-0 w-full bg-surface border-t-2 border-primary flex justify-around items-center py-3 z-50">
+      <router-link
+        class="flex flex-col items-center gap-1"
+        :class="isActive('/admin/dashboard') ? 'text-primary font-bold' : 'text-secondary'"
+        to="/admin/dashboard"
+      >
+        <span class="material-symbols-outlined">dashboard</span>
+        <span class="text-[10px] font-label-md">Home</span>
+      </router-link>
+      <router-link
+        class="flex flex-col items-center gap-1"
+        :class="isActive('/admin/suggestions') ? 'text-primary font-bold' : 'text-secondary'"
+        to="/admin/suggestions"
+      >
+        <span class="material-symbols-outlined">view_kanban</span>
+        <span class="text-[10px] font-label-md">Kanban</span>
+      </router-link>
+      <router-link
+        class="flex flex-col items-center gap-1"
+        :class="isActive('/admin/employees') ? 'text-primary font-bold' : 'text-secondary'"
+        to="/admin/employees"
+      >
+        <span class="material-symbols-outlined">group</span>
+        <span class="text-[10px] font-label-md">People</span>
+      </router-link>
+      <router-link
+        class="flex flex-col items-center gap-1"
+        :class="isActive('/admin/analytics') ? 'text-primary font-bold' : 'text-secondary'"
+        to="/admin/analytics"
+      >
+        <span class="material-symbols-outlined">analytics</span>
+        <span class="text-[10px] font-label-md">Insights</span>
+      </router-link>
+      <router-link
+        class="flex flex-col items-center gap-1"
+        :class="isActive('/profile') ? 'text-primary font-bold' : 'text-secondary'"
+        to="/profile"
+      >
+        <span class="material-symbols-outlined">person</span>
+        <span class="text-[10px] font-label-md">Profile</span>
+      </router-link>
+    </nav>
   </div>
 </template>

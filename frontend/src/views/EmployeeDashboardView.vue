@@ -1,12 +1,13 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import axios from 'axios'
 import logo from '@/assets/logo.png'
 import SuggestForm from '@/components/SuggestForm.vue'
 
 const router = useRouter()
+const route = useRoute()
 const authStore = useAuthStore()
 
 const stats = ref(null)
@@ -20,6 +21,10 @@ const statusMap = {
   Approved: { label: 'Approved', class: 'bg-tertiary-fixed text-primary' },
   Rejected: { label: 'Declined', class: 'bg-error-container text-on-error-container' },
   Implemented: { label: 'Implemented', class: 'bg-surface-container-high text-on-surface-variant' },
+}
+
+function isActive(path) {
+  return route.path === path
 }
 
 function formatDate(dateStr) {
@@ -67,7 +72,7 @@ onMounted(fetchDashboardData)
 
 <template>
   <div class="bg-surface text-on-surface font-body-md min-h-screen">
-    <!-- Sidebar -->
+    <!-- Sidebar (Desktop) -->
     <nav class="fixed left-0 top-20 h-[calc(100vh-80px)] flex flex-col p-4 border-r-2 border-primary bg-background hidden md:flex w-[200px] z-20">
       <div class="flex flex-col gap-1 flex-grow">
         <router-link class="flex items-center gap-2 p-2 rounded bg-surface-container text-primary transition-colors text-sm font-medium active:scale-95" to="/dashboard">
@@ -94,10 +99,12 @@ onMounted(fetchDashboardData)
     <!-- Top Nav -->
     <header class="w-full top-0 sticky z-30 bg-background border-b-2 border-primary">
       <nav class="flex justify-between items-center h-20 px-gutter max-w-page mx-auto">
-        <router-link to="/dashboard" class="flex items-center gap-3">
-          <img :src="logo" alt="iSuggest Logo" class="w-10 h-10 object-contain" />
-          <span class="font-headline-md text-headline-md font-bold text-primary">iSuggest</span>
-        </router-link>
+        <div class="flex items-center gap-2">
+          <router-link to="/dashboard" class="flex items-center gap-3">
+            <img :src="logo" alt="iSuggest Logo" class="w-10 h-10 object-contain" />
+            <span class="font-headline-md text-headline-md font-bold text-primary hidden sm:inline">iSuggest</span>
+          </router-link>
+        </div>
         <div class="flex items-center gap-4">
           <div class="hidden lg:flex items-center gap-3">
             <a class="text-sm text-secondary hover:text-tertiary-container transition-all" href="#">Settings</a>
@@ -117,13 +124,19 @@ onMounted(fetchDashboardData)
                 class="material-symbols-outlined text-primary cursor-pointer text-[28px]"
               >account_circle</span>
             </router-link>
+            <div class="hidden max-md:flex items-center">
+              <button
+                class="material-symbols-outlined text-primary cursor-pointer text-[22px]"
+                @click="handleLogout"
+              >logout</button>
+            </div>
           </div>
         </div>
       </nav>
     </header>
 
     <!-- Main Content -->
-    <main class="md:ml-[232px] md:mr-[32px] min-h-[calc(100vh-80px)] p-4 md:p-6 max-w-page mx-auto">
+    <main class="md:ml-[232px] md:mr-[32px] min-h-[calc(100vh-80px)] p-4 md:p-6 max-w-page mx-auto pb-20 md:pb-6">
       <!-- Hero -->
       <section class="mb-6">
         <h2 class="text-2xl md:text-3xl text-primary font-bold">
@@ -226,19 +239,27 @@ onMounted(fetchDashboardData)
 
     <!-- Mobile Bottom Nav -->
     <nav class="md:hidden fixed bottom-0 left-0 w-full bg-surface border-t-2 border-primary flex justify-around items-center py-3 z-50">
-      <router-link class="flex flex-col items-center gap-1 text-primary font-bold" to="/dashboard">
+      <router-link
+        class="flex flex-col items-center gap-1"
+        :class="isActive('/dashboard') ? 'text-primary font-bold' : 'text-secondary'"
+        to="/dashboard"
+      >
         <span class="material-symbols-outlined">dashboard</span>
         <span class="text-[10px] font-label-md">Home</span>
       </router-link>
-      <router-link class="flex flex-col items-center gap-1 text-secondary" to="/dashboard">
-        <span class="material-symbols-outlined">lightbulb</span>
-        <span class="text-[10px] font-label-md">Suggest</span>
-      </router-link>
-      <router-link class="flex flex-col items-center gap-1 text-secondary" to="/my-submissions">
+      <router-link
+        class="flex flex-col items-center gap-1"
+        :class="isActive('/my-submissions') ? 'text-primary font-bold' : 'text-secondary'"
+        to="/my-submissions"
+      >
         <span class="material-symbols-outlined">list_alt</span>
         <span class="text-[10px] font-label-md">My Ideas</span>
       </router-link>
-      <router-link class="flex flex-col items-center gap-1 text-secondary" to="/profile">
+      <router-link
+        class="flex flex-col items-center gap-1"
+        :class="isActive('/profile') ? 'text-primary font-bold' : 'text-secondary'"
+        to="/profile"
+      >
         <span class="material-symbols-outlined">person</span>
         <span class="text-[10px] font-label-md">Profile</span>
       </router-link>

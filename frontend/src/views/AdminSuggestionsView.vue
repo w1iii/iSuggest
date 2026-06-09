@@ -22,6 +22,7 @@ const draggedCard = ref(null)
 const sourceColumn = ref(null)
 const selectedSuggestion = ref(null)
 const showModal = ref(false)
+const activeTab = ref('Pending')
 let abortController = null
 let isMounted = false
 
@@ -202,10 +203,30 @@ onBeforeUnmount(() => {
       <p class="font-body-md text-body-md text-secondary max-w-2xl">Overview and manage the suggestion workflow across stages.</p>
     </section>
 
+    <!-- Mobile Tab Bar -->
+    <div class="md:hidden flex overflow-x-auto gap-1 mb-4 pb-2 scrollbar-hide">
+      <button
+        v-for="column in columns"
+        :key="column.key"
+        @click="activeTab = column.key"
+        class="shrink-0 px-4 py-2 rounded-full text-xs font-semibold border-2 border-primary transition-all whitespace-nowrap"
+        :class="activeTab === column.key
+          ? 'bg-primary text-surface'
+          : 'bg-surface text-primary hover:bg-surface-container'"
+      >
+        {{ column.label }}
+        <span class="ml-1.5 inline-flex items-center justify-center w-5 h-5 rounded-full text-[10px] font-bold"
+          :class="activeTab === column.key ? 'bg-surface text-primary' : 'bg-secondary-container text-on-secondary-container'"
+        >
+          {{ getColumnCount(column.key) }}
+        </span>
+      </button>
+    </div>
+
     <!-- Kanban Board -->
     <div v-if="!loading" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-start">
       <!-- Columns -->
-      <div v-for="column in columns" :key="column.key" class="flex flex-col gap-3">
+      <div v-for="column in columns" :key="column.key" class="flex flex-col gap-3" :class="activeTab !== column.key ? 'hidden md:flex' : 'flex'">
         <!-- Column Header -->
         <div class="flex items-center justify-between px-0 mb-2">
           <h3 class="font-label-md text-label-md text-primary flex items-center gap-1">
@@ -219,7 +240,7 @@ onBeforeUnmount(() => {
 
         <!-- Drop Zone -->
         <div
-          class="flex flex-col gap-3 min-h-[400px] p-4 rounded-lg bg-surface-container-lowest border-2 border-primary transition-all hover:border-secondary-container"
+          class="flex flex-col gap-3 min-h-[200px] md:min-h-[400px] p-4 rounded-lg bg-surface-container-lowest border-2 border-primary transition-all hover:border-secondary-container"
           @dragover="handleDragOver"
           @drop="handleDrop(column.key)"
           @dragleave="e => e.preventDefault()"
@@ -252,7 +273,7 @@ onBeforeUnmount(() => {
             </div>
           </div>
 
-          <!-- Add Button -->
+          <!-- Empty State -->
           <button v-if="suggestions[column.key].length === 0" class="w-full border-2 border-dashed border-outline-variant p-4 rounded-lg font-label-md text-xs text-on-surface-variant hover:border-primary hover:text-primary transition-all flex items-center justify-center gap-2">
             <span class="material-symbols-outlined text-lg">add</span>
             Add

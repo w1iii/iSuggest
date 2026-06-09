@@ -104,12 +104,12 @@ const closeModal = () => {
   >
     <!-- Modal -->
     <div
-      class="bg-surface rounded-lg border-2 border-primary max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+      class="bg-surface rounded-lg border-2 border-primary max-w-2xl w-full max-h-[90vh] overflow-y-auto mx-4"
       @click.stop
     >
       <!-- Header -->
-      <div class="sticky top-0 flex justify-between items-center p-6 border-b-2 border-primary bg-surface-container-low">
-        <h2 class="font-headline-md text-headline-md text-primary">Suggestion Details</h2>
+      <div class="sticky top-0 flex justify-between items-center p-4 md:p-6 border-b-2 border-primary bg-surface-container-low">
+        <h2 class="font-label-md md:font-headline-md text-label-md md:text-headline-md text-primary">Suggestion Details</h2>
         <button
           @click="closeModal"
           class="material-symbols-outlined text-2xl text-on-surface-variant hover:text-primary transition-colors cursor-pointer"
@@ -119,11 +119,11 @@ const closeModal = () => {
       </div>
 
       <!-- Content -->
-      <div class="p-6 space-y-6">
+      <div class="p-4 md:p-6 space-y-4 md:space-y-6">
         <!-- Title -->
         <div>
           <h3 class="font-label-md text-label-md text-secondary mb-2">Title</h3>
-          <p class="font-headline-md text-headline-md text-primary">{{ suggestion.title }}</p>
+          <p class="font-label-md md:font-headline-md text-label-md md:text-headline-md text-primary">{{ suggestion.title }}</p>
         </div>
 
         <!-- Description -->
@@ -133,7 +133,7 @@ const closeModal = () => {
         </div>
 
         <!-- Meta Info Grid -->
-        <div class="grid grid-cols-2 gap-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <!-- Category -->
           <div>
             <h3 class="font-label-md text-label-md text-secondary mb-2">Category</h3>
@@ -229,7 +229,7 @@ const closeModal = () => {
         <!-- Status Actions -->
         <div class="border-t-2 border-outline-variant/30 pt-4">
           <h3 class="font-label-md text-label-md text-secondary mb-3">Change Status</h3>
-          <div class="grid grid-cols-2 md:grid-cols-5 gap-2">
+          <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2">
             <button
               v-for="status in statusOptions"
               :key="status"
