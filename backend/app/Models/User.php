@@ -2,17 +2,19 @@
 
 namespace App\Models;
 
-use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<UserFactory> */
     use HasApiTokens, HasFactory, Notifiable;
+
+    protected $appends = ['profile_image_url'];
 
     protected $fillable = [
         'name',
@@ -45,5 +47,15 @@ class User extends Authenticatable
     public function suggestions(): HasMany
     {
         return $this->hasMany(Suggestion::class);
+    }
+
+    protected function profileImageUrl(): Attribute
+    {
+        return Attribute::get(function () {
+            if (!$this->image) {
+                return null;
+            }
+            return asset(Storage::url($this->image));
+        });
     }
 }

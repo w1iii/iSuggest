@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UpdateProfileController;
 use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Controllers\SubmitController;
 use Illuminate\Http\Request;
@@ -21,6 +22,7 @@ Route::middleware('auth:sanctum')->prefix('v1')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/user', [ProfileController::class, 'show']);    
     Route::patch('/user', [ProfileController::class, 'update']);
+    Route::post('/profile/update', [UpdateProfileController::class, 'update']);
 
     // Admin Specific Routes
     Route::middleware('role:Administrator')->prefix('admin')->group(function () {
