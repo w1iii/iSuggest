@@ -4,12 +4,8 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UpdateProfileController;
 use App\Http\Controllers\Admin\EmployeeController;
-use App\Http\Controllers\SubmitController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\UpdateSuggestionController;
-use App\Http\Controllers\DeleteSuggestionController;
-use App\Http\Controllers\GetSuggestionsController;
 use App\Http\Controllers\SuggestionsController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\SuggestionController;
@@ -39,17 +35,14 @@ Route::middleware('auth:sanctum')->prefix('v1')->group(function () {
         Route::patch('/suggestions/{id}/status', [SuggestionController::class, 'updateStatus']);
     });
 
-    // Global Authenticated Suggestion Routes (Accessible to Admins and Employees)
+    // Suggestion Routes
     Route::get('/suggestions/stats', [SuggestionsController::class, 'stats']);
     Route::get('/suggestions/user-stats', [SuggestionsController::class, 'userStats']);
 
-    // Protected Employee Suggestion Routes
     Route::middleware('role:Employee')->group(function () {
-        Route::get('/suggestions', [GetSuggestionsController::class, 'get']);
-        Route::post('/suggestions', [SubmitController::class, 'store']);
-
-        // Manage Suggestions (update/delete)
-        Route::put('/suggestions/{id}', [UpdateSuggestionController::class, 'update']);
-        Route::delete('/suggestions/{id}', [DeleteSuggestionController::class, 'destroy']);
+        Route::get('/suggestions', [SuggestionsController::class, 'index']);
+        Route::post('/suggestions', [SuggestionsController::class, 'store']);
+        Route::put('/suggestions/{id}', [SuggestionsController::class, 'update']);
+        Route::delete('/suggestions/{id}', [SuggestionsController::class, 'destroy']);
     });
 });
