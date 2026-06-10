@@ -51,10 +51,6 @@
                 <div class="value">{{ $stats['implemented'] }}</div>
                 <div class="label">Implemented</div>
             </div>
-            <div class="stat-box">
-                <div class="value">{{ $stats['growth_pct'] }}%</div>
-                <div class="label">Growth</div>
-            </div>
         </div>
     </div>
 

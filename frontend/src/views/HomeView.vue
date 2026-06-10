@@ -229,7 +229,7 @@ onMounted(() => {
               </p>
               <div class="grid grid-cols-3 gap-4 pt-4">
                 <div class="text-center">
-                  <div class="text-display-lg-mobile font-bold text-primary">500+</div>
+                  <div class="text-display-lg-mobile font-bold text-primary">100+</div>
                   <div class="text-label-md text-on-surface-variant">Ideas Submitted</div>
                 </div>
                 <div class="text-center">
@@ -237,7 +237,7 @@ onMounted(() => {
                   <div class="text-label-md text-on-surface-variant">Implementation</div>
                 </div>
                 <div class="text-center">
-                  <div class="text-display-lg-mobile font-bold text-primary">1K+</div>
+                  <div class="text-display-lg-mobile font-bold text-primary">50+</div>
                   <div class="text-label-md text-on-surface-variant">Active Users</div>
                 </div>
               </div>

@@ -8,7 +8,7 @@ import AdminLayout from '@/components/AdminLayout.vue'
 const authStore = useAuthStore()
 const router = useRouter()
 
-const stats = ref({ total_ideas: 0, in_review: 0, implemented: 0, goal: 200, growth_pct: 0 })
+const stats = ref({ total_ideas: 0, in_review: 0, implemented: 0, goal: 200 })
 const categories = ref([])
 const topIdeas = ref([])
 const trends = ref([])
@@ -118,10 +118,6 @@ async function downloadReport() {
           <div class="bg-surface border-2 border-primary px-4 py-2 rounded-full flex flex-col items-center">
             <span class="text-xs text-on-surface-variant">In Review</span>
             <span class="text-label-md font-bold text-primary">{{ stats.in_review }}</span>
-          </div>
-          <div class="bg-surface border-2 border-primary px-4 py-2 rounded-full flex flex-col items-center">
-            <span class="text-xs text-on-surface-variant">Growth</span>
-            <span class="text-label-md font-bold text-primary">{{ stats.growth_pct }}%</span>
           </div>
         </div>
       </section>
