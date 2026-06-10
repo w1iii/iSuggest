@@ -96,10 +96,6 @@ async function handleLogout() {
           </router-link>
         </div>
         <div class="flex items-center gap-4">
-          <div class="hidden lg:flex items-center gap-3">
-            <a class="text-sm text-secondary hover:text-tertiary-container transition-all" href="#">Settings</a>
-            <a class="text-sm text-secondary hover:text-tertiary-container transition-all" href="#">Support</a>
-          </div>
           <div class="flex items-center gap-2">
             <span class="material-symbols-outlined text-primary cursor-pointer text-[22px]">notifications</span>
             <router-link to="/profile">
