@@ -47,7 +47,7 @@ class EmployeeController extends Controller
             'role' => 'Employee',
         ]);
 
-        Mail::to($user)->send(new WelcomeEmployee($user));
+        Mail::to($user)->send(new WelcomeEmployee($user, $validated['password']));
 
         return response()->json([
             'success' => true,

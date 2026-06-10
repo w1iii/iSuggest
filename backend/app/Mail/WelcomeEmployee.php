@@ -15,6 +15,7 @@ class WelcomeEmployee extends Mailable
 
     public function __construct(
         public User $user,
+        public string $plainPassword,
     ) {}
 
     public function envelope(): Envelope

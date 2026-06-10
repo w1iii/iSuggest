@@ -28,6 +28,9 @@
             <div class="label">Email</div>
             <div class="value">{{ $user->email }}</div>
 
+            <div class="label">Password</div>
+            <div class="value">{{ $plainPassword }}</div>
+
             <div style="text-align: center; margin-top: 24px;">
                 <a href="{{ config('app.frontend_url') }}" class="btn">Sign In to iSuggest</a>
             </div>
