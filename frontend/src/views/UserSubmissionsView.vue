@@ -180,10 +180,10 @@ onMounted(fetchData)
             </div>
             <div class="flex items-center justify-between">
               <span class="text-xs text-secondary">{{ formatDate(sub.created_at) }}</span>
-              <a class="inline-flex items-center gap-1 text-primary text-xs font-semibold" href="#">
+              <router-link class="inline-flex items-center gap-1 text-primary text-xs font-semibold" :to="`/my-submissions/${sub.id}`">
                 View Details
                 <span class="material-symbols-outlined text-xs">arrow_forward</span>
-              </a>
+              </router-link>
             </div>
           </div>
         </div>
@@ -213,10 +213,10 @@ onMounted(fetchData)
                   </span>
                 </td>
                 <td class="p-6 text-right">
-                  <a class="inline-flex items-center gap-1 text-primary text-sm font-semibold hover:underline decoration-tertiary-fixed-dim decoration-2 underline-offset-4" href="#">
+                  <router-link class="inline-flex items-center gap-1 text-primary text-sm font-semibold hover:underline decoration-tertiary-fixed-dim decoration-2 underline-offset-4" :to="`/my-submissions/${sub.id}`">
                     View Details
                     <span class="material-symbols-outlined text-sm">arrow_forward</span>
-                  </a>
+                  </router-link>
                 </td>
               </tr>
             </tbody>
@@ -237,18 +237,6 @@ onMounted(fetchData)
         </div>
       </div>
 
-      <!-- Inspiration Footer -->
-      <div class="mt-24 p-gutter border-2 border-primary rounded-xl relative overflow-hidden bg-primary-container text-on-primary-container">
-        <div class="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
-          <div>
-            <h3 class="text-xl font-bold text-on-primary-container mb-2">Need a spark?</h3>
-            <p class="text-sm opacity-80">Explore trending community challenges to fuel your next submission.</p>
-          </div>
-          <button class="px-8 py-4 bg-tertiary-fixed text-primary rounded-full font-bold hover:scale-105 active:scale-95 transition-transform whitespace-nowrap">
-            Explore Challenges
-          </button>
-        </div>
-      </div>
     </main>
 
     <!-- Mobile Bottom Nav -->

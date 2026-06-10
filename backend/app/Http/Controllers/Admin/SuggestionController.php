@@ -47,4 +47,15 @@ class SuggestionController extends Controller
             'data' => $suggestion->load('user:id,name,email'),
         ]);
     }
+
+    public function destroy($id)
+    {
+        $suggestion = Suggestion::findOrFail($id);
+        $suggestion->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Suggestion deleted successfully',
+        ], 200);
+    }
 }

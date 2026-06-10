@@ -7,7 +7,7 @@ const props = defineProps({
   suggestion: Object,
 })
 
-const emit = defineEmits(['update:modelValue', 'updated'])
+const emit = defineEmits(['update:modelValue', 'updated', 'deleted'])
 
 const isOpen = computed({
   get: () => props.modelValue,
@@ -15,6 +15,8 @@ const isOpen = computed({
 })
 
 const loading = ref(false)
+const deleting = ref(false)
+const showDeleteConfirm = ref(false)
 const editingRemarks = ref(false)
 const remarks = ref(props.suggestion?.admin_remarks || '')
 const newStatus = ref(props.suggestion?.status || '')
@@ -88,6 +90,21 @@ const handleSaveRemarks = async () => {
   }
 }
 
+async function handleDelete() {
+  if (!props.suggestion?.id) return
+  deleting.value = true
+  try {
+    await axios.delete(`/api/v1/admin/suggestions/${props.suggestion.id}`)
+    showDeleteConfirm.value = false
+    emit('deleted', props.suggestion.id)
+    closeModal()
+  } catch (e) {
+    console.error('Failed to delete suggestion', e)
+  } finally {
+    deleting.value = false
+  }
+}
+
 const closeModal = () => {
   isOpen.value = false
   editingRemarks.value = false
@@ -110,12 +127,51 @@ const closeModal = () => {
       <!-- Header -->
       <div class="sticky top-0 flex justify-between items-center p-4 md:p-6 border-b-2 border-primary bg-surface-container-low">
         <h2 class="font-label-md md:font-headline-md text-label-md md:text-headline-md text-primary">Suggestion Details</h2>
-        <button
-          @click="closeModal"
-          class="material-symbols-outlined text-2xl text-on-surface-variant hover:text-primary transition-colors cursor-pointer"
-        >
-          close
-        </button>
+        <div class="flex items-center gap-2">
+          <button
+            @click="showDeleteConfirm = true"
+            class="material-symbols-outlined text-xl text-error hover:text-red-700 transition-colors cursor-pointer"
+            title="Delete suggestion"
+          >
+            delete
+          </button>
+          <button
+            @click="closeModal"
+            class="material-symbols-outlined text-2xl text-on-surface-variant hover:text-primary transition-colors cursor-pointer"
+          >
+            close
+          </button>
+        </div>
+      </div>
+
+      <!-- Delete Confirmation -->
+      <div
+        v-if="showDeleteConfirm"
+        class="fixed inset-0 z-[60] bg-black/50 flex items-center justify-center p-4"
+        @click="showDeleteConfirm = false"
+      >
+        <div class="bg-surface rounded-lg border-2 border-error max-w-md w-full p-6" @click.stop>
+          <h3 class="font-bold text-lg text-primary mb-2">Delete Suggestion</h3>
+          <p class="text-sm text-secondary mb-6">Are you sure you want to delete this suggestion? This action cannot be undone.</p>
+          <div class="flex gap-3 justify-end">
+            <button
+              @click="showDeleteConfirm = false"
+              :disabled="deleting"
+              class="px-4 py-2 border-2 border-outline-variant text-on-surface-variant font-semibold text-sm rounded-lg hover:border-primary disabled:opacity-50 transition-colors cursor-pointer"
+            >
+              Cancel
+            </button>
+            <button
+              @click="handleDelete"
+              :disabled="deleting"
+              class="px-4 py-2 bg-error text-on-error font-semibold text-sm rounded-lg hover:opacity-90 disabled:opacity-50 transition-all cursor-pointer flex items-center gap-2"
+            >
+              <span v-if="deleting" class="material-symbols-outlined text-sm animate-spin">progress_activity</span>
+              <span v-else class="material-symbols-outlined text-sm">delete</span>
+              Delete
+            </button>
+          </div>
+        </div>
       </div>
 
       <!-- Content -->

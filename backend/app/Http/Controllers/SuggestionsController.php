@@ -43,6 +43,24 @@ class SuggestionsController extends Controller
         ], 201);
     }
 
+    public function show($id)
+    {
+        $suggestion = Suggestion::where('user_id', auth()->id())->where('id', $id)->first();
+
+        if (!$suggestion) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Suggestion not found or unauthorized'
+            ], 404);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Suggestion retrieved successfully',
+            'data' => $suggestion
+        ], 200);
+    }
+
     public function update(UpdateSuggestionRequest $request, $id)
     {
         $suggestion = Suggestion::where('user_id', auth()->id())->where('id', $id)->first();

@@ -27,6 +27,12 @@ const router = createRouter({
       component: () => import('../views/UserSubmissionsView.vue'),
     },
     {
+      path: '/my-submissions/:id',
+      name: 'suggestion-detail',
+      meta: { requiresAuth: true },
+      component: () => import('../views/SuggestionDetailView.vue'),
+    },
+    {
       path: '/profile',
       name: 'profile',
       meta: { requiresAuth: true },

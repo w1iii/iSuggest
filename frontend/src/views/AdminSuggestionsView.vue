@@ -146,6 +146,16 @@ const openSuggestionDetail = (card) => {
   showModal.value = true
 }
 
+const handleSuggestionDeleted = (suggestionId) => {
+  for (const status in suggestions.value) {
+    const idx = suggestions.value[status].findIndex(s => s.id === suggestionId)
+    if (idx !== -1) {
+      suggestions.value[status].splice(idx, 1)
+      break
+    }
+  }
+}
+
 const handleSuggestionUpdated = (updatedData) => {
   // Update card in appropriate column
   const oldStatus = selectedSuggestion.value.status
@@ -298,6 +308,7 @@ onBeforeUnmount(() => {
       v-model="showModal"
       :suggestion="selectedSuggestion"
       @updated="handleSuggestionUpdated"
+      @deleted="handleSuggestionDeleted"
     />
   </div>
 </template>

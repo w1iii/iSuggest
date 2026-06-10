@@ -33,6 +33,7 @@ Route::middleware('auth:sanctum')->prefix('v1')->group(function () {
         Route::get('/suggestions/statuses', [SuggestionController::class, 'statuses']);
         Route::get('/suggestions', [SuggestionController::class, 'index']);
         Route::patch('/suggestions/{id}/status', [SuggestionController::class, 'updateStatus']);
+        Route::delete('/suggestions/{id}', [SuggestionController::class, 'destroy']);
     });
 
     // Suggestion Routes
@@ -41,6 +42,7 @@ Route::middleware('auth:sanctum')->prefix('v1')->group(function () {
 
     Route::middleware('role:Employee')->group(function () {
         Route::get('/suggestions', [SuggestionsController::class, 'index']);
+        Route::get('/suggestions/{id}', [SuggestionsController::class, 'show']);
         Route::post('/suggestions', [SuggestionsController::class, 'store']);
         Route::put('/suggestions/{id}', [SuggestionsController::class, 'update']);
         Route::delete('/suggestions/{id}', [SuggestionsController::class, 'destroy']);
